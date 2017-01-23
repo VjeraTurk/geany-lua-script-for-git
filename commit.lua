@@ -151,12 +151,12 @@ if result==''  then
 
 	if string.match(result,"nothing added to commit but untracked files present") then
 	geany.banner = "Untracked files present"
-	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",false)
+	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
 
 		if choice == true then
 			
 			local files = scandir(FILE_DIR_PATH)
-			local yes_no = {"Cancel","Add"}
+			local yes_no = {"Add","Cancel"}
 			local dialog= dialog.new ("banner", yes_no)
 			dialog.label(dialog, "Pick files to add")
 
@@ -165,7 +165,7 @@ if result==''  then
 				end
 
 			dialog.run(dialog)
-			geany.message(file[1])
+			geany.message("")
 		end
 	end
 
