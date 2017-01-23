@@ -160,11 +160,14 @@ if result==''  then
 			local dialog= dialog.new ("banner", yes_no)
 			dialog.label(dialog, "Pick files to add")
 
-			dialog.run(dialog)
 			
-				for i,file in ipairs(files) do
+				for i,file in ipairs() do
 					dialog.checkbox ( dialog,"files", false, files[i])
 				end
+				
+			--ovdje	
+			dialog.run(dialog)
+			
 		end
 	end
 
