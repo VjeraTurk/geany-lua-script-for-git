@@ -165,7 +165,7 @@ if result==''  then
 				end
 
 			dialog.run(dialog)
-			geany.message("")
+			geany.message(" "..file[1].."")
 		end
 	end
 
