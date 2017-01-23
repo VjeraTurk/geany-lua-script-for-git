@@ -163,9 +163,8 @@ if result==''  then
 				for i,file in ipairs(files) do
 					dialog.checkbox ( dialog,"files", false, files[i])
 				end
+			--dialog.run(dialog)
 			
-			dialog.run(dialog)
-			geany.message(""..dialog.."")
 		end
 	end
 
