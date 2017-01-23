@@ -156,7 +156,7 @@ if result==''  then
 		if choice == true then
 			
 			local files = scandir(FILE_DIR_PATH)
-			local yes_no = {"Add","Cancel"}
+			local yes_no = {"Cancel","Add"}
 			local dialog= dialog.new ("banner", yes_no)
 			dialog.label(dialog, "Pick files to add")
 
@@ -165,7 +165,7 @@ if result==''  then
 				end
 
 			dialog.run(dialog)
-			geany.message(files[1])
+			geany.message(file[1])
 		end
 	end
 
