@@ -100,7 +100,7 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 
 			geany.banner = "Add remote origin"
 			choice = geany.confirm ( "Add remote origin", "This directory is only local. Link to web repository? (add origin)", true )
-			origin=geany.input("Please use public repository", "https://")
+			origin=geany.input("Please use public repository.", "https://")
 				if choice == true then 
 					cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
 					handle = io.popen(cmd)
@@ -154,13 +154,14 @@ if result==''  then
 	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",false)
 
 		if choice == true then
+			
 			local files = scandir(FILE_DIR_PATH)
 			local yes_no = {"Add","Cancel"}
 			local dialog= dialog.new ("banner", yes_no)
 			dialog.label(dialog, "Pick files to add")
 
 				for i,file in ipairs(files) do
-					dialog.checkbox ( dialog,"files", false, files[i])
+					file[i]=dialog.checkbox ( dialog,"files", false, files[i])
 				end
 
 			dialog.run(dialog)
