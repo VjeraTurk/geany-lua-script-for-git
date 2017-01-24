@@ -172,7 +172,7 @@ if result==''  then
 	end
 
 end
-
+--proba goran
 --prije git comande, cd komanda u direktorij filea
 --!! local cmd="echo "..geany.filename().." > SomeFile2.txt" : ne radi, mora biti cijeli filepath od SomeFile2.txt
 --local test_cmd="echo Neki tekst u novi file >/usr/share/geany-plugins/geanylua/edit/someFile2.txt"
