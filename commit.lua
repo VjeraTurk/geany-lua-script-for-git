@@ -161,7 +161,7 @@ if result==''  then
 			dialog.label(dialog, "Pick files to add")
 
 			
-				for i,file in ipairs() do
+				for i,file in ipairs(files) do
 					dialog.checkbox ( dialog,"files", false, files[i])
 				end
 				
