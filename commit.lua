@@ -175,7 +175,7 @@ end
 						dialog.checkbox(dialog,"files", false, files[i])		
 					end
 				
-				dialog.run(dialog)
+				result = dialog.run(dialog)
 				geany.message(result)
 			
 			end
