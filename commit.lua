@@ -171,8 +171,8 @@ end
 				local dialog= dialog.new ("banner", yes_no)
 				dialog.label(dialog, "Pick files to add")
 				
-					for i,file in ipairs(files) do
-						file[i] = dialog.checkbox(dialog,"files", false, files[i])		
+					for i in ipairs(files) do
+						dialog.checkbox(dialog,"files", false, files[i])		
 					end
 				
 				dialog.run(dialog)
