@@ -51,7 +51,7 @@ end
 	
 --provjeravamo je li git instaliran
 	
-	cmd="git --version"	
+	cmd="koko --version"	
 	if os.execute(cmd) ~= 0 then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ yum install git \nFedora:\n $ yum install git"
 			geany.message(install_msg)
