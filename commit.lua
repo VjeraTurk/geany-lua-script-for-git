@@ -51,12 +51,14 @@ end
 	
 --provjeravamo je li git instaliran
 	
-	cmd="koko --version"	
+	cmd="git --version"	
 	if os.execute(cmd) ~= 0 then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ yum install git \nFedora:\n $ yum install git"
-			geany.message(install_msg)
+			geany.message(install_msg)			
+			return --exit script
 		end
---[[	
+		
+--[[	 alternativno
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
@@ -66,15 +68,14 @@ end
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ yum install git \nFedora:\n $ yum install git"
 			geany.message(install_msg)
 		end
-		
+]]		
 	--username=geany.input("username", "")
-]]
-	
 
+	
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
 	local FILE_DIR_PATH = geany.dirname(geany.filename())
 	local FILE_NAME = geany.basename(geany.filename())
-	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
+	geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
 
 	local cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 	--!! 2>&1 pokazuje ili output ili error
