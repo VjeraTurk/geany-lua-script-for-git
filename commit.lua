@@ -177,6 +177,7 @@ end
 			
 			result = dialog.run(dialog)
 			geany.message(result)
+			
 		end
 	end
 
