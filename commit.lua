@@ -172,11 +172,11 @@ end
 				dialog.label(dialog, "Pick files to add")
 				
 					for i,file in ipairs(files) do
-						dialog.checkbox ( dialog,"files", false, files[i])
+						dialog.option ( dialog,"files", false, files[i])
 			end
 			
 			result = dialog.run(dialog)
-			geany.message(result[1])
+			geany.message(result)
 			
 		end
 	end
