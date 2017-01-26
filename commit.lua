@@ -146,39 +146,38 @@ end
 
 	elseif result==''  then
 
-	message=geany.input("Commit message", "no comment")
+		message=geany.input("Commit message", "no comment")
+		
+		if message ~= nil then
+			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
+		else
+			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
+		end
 
-	if message ~= nil then
-		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
-	else
-		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
-	end
+		handle = io.popen(cmd)
+		result = handle:read("*a")
+		handle:close()
 
-	handle = io.popen(cmd)
-	result = handle:read("*a")
-	handle:close()
+		--geany.message(" "..cmd.." :\n"..result.."")
 
-	geany.message(" "..cmd.." :\n"..result.."")
+		if string.match(result,"nothing added to commit but untracked files present") then
+		geany.banner = "Untracked files present"
+		choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
 
-	if string.match(result,"nothing added to commit but untracked files present") then
-	geany.banner = "Untracked files present"
-	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
-
-		if choice == true then
-			
-			local files = scandir(FILE_DIR_PATH)
-			local yes_no = {"Add","Cancel"}
-			local dialog= dialog.new ("banner", yes_no)
-			dialog.label(dialog, "Pick files to add")
-
-			
-				for i,file in ipairs(files) do
-					dialog.checkbox ( dialog,"files", false, files[i])
-				end
+			if choice == true then
+				
+				local files = scandir(FILE_DIR_PATH)
+				local yes_no = {"Add","Cancel"}
+				local dialog= dialog.new ("banner", yes_no)
+				dialog.label(dialog, "Pick files to add")
+				
+					for i,file in ipairs(files) do
+						dialog.checkbox ( dialog,"files", false, files[i])
+			end
 				
 			--ovdje	
 			
-			dialog.run(dialog)
+			result = dialog.run(dialog)
 			
 		end
 	end
