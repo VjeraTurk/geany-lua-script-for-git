@@ -70,7 +70,7 @@ end
 		end
 ]]		
 	--username=geany.input("username", "")
-
+	--function dialog.password ( dlg, key, default, prompt )--Identical to the text() function, except that the contents of the entry box are "masked", the characters are displayed as asterisks. 
 	
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
 	local FILE_DIR_PATH = geany.dirname(geany.filename())
@@ -174,8 +174,6 @@ end
 					for i,file in ipairs(files) do
 						dialog.checkbox ( dialog,"files", false, files[i])
 			end
-				
-			--ovdje	
 			
 			result = dialog.run(dialog)
 			geany.message(result)
