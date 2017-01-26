@@ -93,7 +93,7 @@ end
 
 		if choice == true then
 			
-			geany.banner = "Init new repository or clone existing one"
+			geany.banner = "Init new repository"
 			cmd = "git init "..FILE_DIR_PATH.."  2>&1"	-- pokazuje ili output ili error
 			handle = io.popen(cmd)
 			result = handle:read("*a")
@@ -138,15 +138,13 @@ end
 					end
 			--psw=geany.input("password", "")
 
-			elseif choice==false then
+		elseif choice==false then
 				return
-			elseif choice==nil then
+		elseif choice==nil then
 				return
 		end
 
-	end
-
-if result==''  then
+	elseif result==''  then
 
 	message=geany.input("Commit message", "no comment")
 
