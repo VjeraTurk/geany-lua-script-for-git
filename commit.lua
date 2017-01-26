@@ -173,12 +173,13 @@ end
 				
 					for i,file in ipairs(files) do
 						dialog.checkbox(dialog,"files", false, files[i])
-			end
+						file[i] = dialog.run(dialog)
+					end
 			
-			result = dialog.run(dialog)
+			
 			geany.message(result)
 			
-		end
+			end
 	end
 
 end
