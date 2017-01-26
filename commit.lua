@@ -6,6 +6,8 @@
 	]]
 -- Lua implementation of PHP scandir function
 
+-- f-ja vraća tablicu svih foldera u direktoriju koji primi kao argument
+
 function scandir(directory)
 
     local i, t, popen = 0, {}, io.popen
@@ -27,8 +29,9 @@ function getBrowserCommand()
 		return "diff"
 	end
 end
-	--testing git diff
-	cmds={
+	
+--komande u tablici, da ne moramo pisati svaki put	
+		cmds={
 	["force_local_users"]="git config --global user.useConfigOnly true",
 	["add_remote_origin"]="git add remote origin ",
 	["clone"]="git clone", --gitlab Public The project can be cloned without any authentication.
@@ -166,6 +169,7 @@ if result==''  then
 				end
 				
 			--ovdje	
+			
 			dialog.run(dialog)
 			
 		end
