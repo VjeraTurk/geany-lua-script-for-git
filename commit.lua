@@ -75,7 +75,7 @@ end
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
 	local FILE_DIR_PATH = geany.dirname(geany.filename())
 	local FILE_NAME = geany.basename(geany.filename())
-	geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
+	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
 
 	local cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 	--!! 2>&1 pokazuje ili output ili error
@@ -86,64 +86,65 @@ end
 	handle:close()
 	--geany.message(""..cmd.." :\n"..result.."")
 
-if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
+	if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
 
-	geany.banner = "Not a git repository"
-	local choice = geany.confirm ( "Your file could not be commited", "This directory is not a git repository (or any of the parent directories. Init new repository?", true )
+		geany.banner = "Not a git repository"
+		local choice = geany.confirm ( "Your file could not be commited", "This directory is not a git repository (or any of the parent directories. Init new repository?", true )
 
-	if choice==true then
-		
-		geany.banner = "Init new repository or clone existing one"
-		cmd="git init "..FILE_DIR_PATH.."  2>&1"	--!! pokazuje ili output ili error
-		handle = io.popen(cmd)
-		result = handle:read("*a")
-		handle:close()
-		geany.message(result)
+		if choice == true then
+			
+			geany.banner = "Init new repository or clone existing one"
+			cmd = "git init "..FILE_DIR_PATH.."  2>&1"	-- pokazuje ili output ili error
+			handle = io.popen(cmd)
+			result = handle:read("*a")
+			handle:close()
+			geany.message(result)
 
-		cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
-		--!! 2>&1 pokazuje ili output ili error
-		--!! ako ulancavamo 2 komande, između stavljamo \n
+			cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
+			--!! 2>&1 pokazuje ili output ili error
+			--!! ako ulancavamo 2 komande, između stavljamo \n
 
-		handle = io.popen(cmd)
-		result = handle:read("*a")
-		handle:close()
+			handle = io.popen(cmd)
+			result = handle:read("*a")
+			handle:close()
 
-		result=''
+			result=''
 
-			geany.banner = "Add remote origin"
-			choice = geany.confirm ( "Add remote origin", "This directory is only local. Link to web repository? (add origin)", true )
-			origin=geany.input("Please use public repository.", "https://")
-				if choice == true then 
-					cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
-					handle = io.popen(cmd)
-					result = handle:read("*a")
-					handle:close()
-					
-					if result=='' then
-					geany.message(" "..cmd.." :\n"..result.."")				
+				geany.banner = "Add remote origin"
+				choice = geany.confirm ( "Add remote origin", "This directory is only local. Link to web repository? (add origin)", true )
+				origin=geany.input("Please use public repository.", "https://")
+					if choice == true then 
+						cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
+						handle = io.popen(cmd)
+						result = handle:read("*a")
+						handle:close()
 						
-						local browser = getBrowserCommand()
-							if browser ~= "diff" then
-								--[[
-								cmd=""..browser.." "..origin..""
-								handle = os.execute(cmd)
-								handle:close()
-								]]
-								geany.message("ovdje sam")
-							end
-					
-						geany.message("Hurray!", "Repositories are now linked.")
-					
+						if result=='' then
+						geany.message(" "..cmd.." :\n"..result.."")				
+							
+							local browser = getBrowserCommand()
+								if browser ~= "diff" then
+									--[[
+									cmd=""..browser.." "..origin..""
+									handle = os.execute(cmd)
+									handle:close()
+									]]
+									geany.message("ovdje sam")
+								end
+						
+							geany.message("Hurray!", "Repositories are now linked.")
+						
+						end
 					end
-				end
-		--psw=geany.input("password", "")
+			--psw=geany.input("password", "")
 
-	elseif choice==false then
-	elseif choice==nil then
+			elseif choice==false then
+				return
+			elseif choice==nil then
+				return
+		end
 
 	end
-
-end
 
 if result==''  then
 
