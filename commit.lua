@@ -178,7 +178,7 @@ end
 			--ovdje	
 			
 			result = dialog.run(dialog)
-			
+			geany.message(result[1])
 		end
 	end
 
