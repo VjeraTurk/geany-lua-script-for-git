@@ -32,6 +32,7 @@ end
 	
 --komande u tablici, da ne moramo pisati svaki put	
 		cmds={
+	["version"]="git --version",
 	["force_local_users"]="git config --global user.useConfigOnly true",
 	["add_remote_origin"]="git add remote origin ",
 	["clone"]="git clone", --gitlab Public The project can be cloned without any authentication.
@@ -48,7 +49,14 @@ end
 
 	geany.banner = "Geany Git assistant"
 	
-	cmd="git --version"	--!! pokazuje ili output ili error
+--provjeravamo je li git instaliran
+	
+	cmd="git --version"	
+	if os.execute(cmd) == 0 then
+			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ yum install git \nFedora:\n $ yum install git"
+			geany.message(install_msg)
+		end
+--[[	
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
@@ -60,7 +68,7 @@ end
 		end
 		
 	--username=geany.input("username", "")
-
+]]
 	
 
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
