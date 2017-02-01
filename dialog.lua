@@ -76,5 +76,8 @@ end
 	
 	local dialog= dialog.new ("Push", yes_no)
 	dialog.label(dialog, "Push")
+	dialog:heading("Credentials on your remote origin site (github/gitlab/bitbucket):")
+	dialog:text("name", "VjeraTurk","Username:")
+	dialog:password("pass", nil,  "Password:")
 	
-	 button, results = dialog:run()
+	button, results = dialog:run()
