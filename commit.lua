@@ -20,7 +20,14 @@ function scandir(directory)
     pfile:close()
     return t
 end
-
+--nema jebeni index 0 u lui -.-
+function listvalues(s)
+    local t = { }
+    for k,v in ipairs(s) do
+        t[#t+1] = tostring(v)
+    end
+    return table.concat(t,"\n")
+end
 function addFiles(path)
 
 	local files = scandir(path)
