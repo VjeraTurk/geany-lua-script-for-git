@@ -68,5 +68,13 @@ end
 	local FILE_DIR_PATH = geany.dirname(geany.filename())
 	local files = scandir(FILE_DIR_PATH)
 	local conc=listvalues(files)
-	geany.message(conc)
-	addFiles(FILE_DIR_PATH)
+--	geany.message(conc)
+--	addFiles(FILE_DIR_PATH)
+
+
+	local yes_no = {"Push","Cancel"}
+	
+	local dialog= dialog.new ("Push", yes_no)
+	dialog.label(dialog, "Push")
+	
+	 button, results = dialog:run()
