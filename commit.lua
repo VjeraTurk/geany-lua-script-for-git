@@ -198,11 +198,11 @@ if result==''  then
 			geany.banner = "Commit your changes"
 			message=geany.input("Commit message", "Added untracked: "..list)
 
-			--if message ~= nil then
+			if message ~= nil then
 				cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
-			--else
+			else
 				--cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
-			--end
+			end
 
 			handle = io.popen(cmd)
 			result = handle:read("*a")
