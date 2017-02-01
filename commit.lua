@@ -150,16 +150,16 @@ if result==''  then
 			local ch={}
 			
 				for i,file in ipairs(files) do
-					ch[i]=dialog.checkbox ( dialog,"files", false, files[i])
+					dialog.checkbox ( dialog,"files", false, files[i])
 				end
 				
 			--ovdje	
-			dialog.run(dialog)
+			ch = dialog.run(dialog)
 			
-			--	geany.message(ch)
+			geany.message(ch)
 			
-			geany.message(ch[1])
 		end
+
 	end
 
 end
