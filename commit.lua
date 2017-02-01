@@ -185,9 +185,10 @@ if result==''  then
 	handle:close()
 
 	geany.message(" "..cmd.." :\n"..result.."")
---Changes not staged for commit:
+--Changes not staged for commit or untracked files present
 	
 	--if string.match(result,"nothing added to commit but untracked files present") then
+	
 	if string.match(result,"Changes not staged for commit") or string.match(result,"untracked files present") then
 	
 	geany.banner = "Untracked files present or Changes not staged for commit"
@@ -197,20 +198,22 @@ if result==''  then
 		
 			local list = listvalues( addFiles(FILE_DIR_PATH) )
 			
-			geany.banner = "Commit your changes"
-			message=geany.input("Commit message", "Added untracked: "..list)
+				if(list) then
+					geany.banner = "Commit your changes"
+					message=geany.input("Commit message", "Added untracked: "..list)
 
-			if message ~= nil then
-				cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
-			else
-				--cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
-			end
+					if message ~= nil then
+						cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
+					else
+						--cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
+					end
 
-			handle = io.popen(cmd)
-			result = handle:read("*a")
-			handle:close()
+					handle = io.popen(cmd)
+					result = handle:read("*a")
+					handle:close()
 
-	geany.message(" "..cmd.." :\n"..result.."")
+					geany.message(" "..cmd.." :\n"..result.."")
+				end
 		end
 
 	end
