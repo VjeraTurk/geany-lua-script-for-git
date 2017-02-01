@@ -198,7 +198,7 @@ if result==''  then
 			
 				if(list ~='') then
 					geany.banner = "Commit your changes"
-					message=geany.input("Commit message", "Added untracked: "..list)
+					message=geany.input("Commit message", "Added files: "..list)
 
 					if message ~= nil then
 						cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
