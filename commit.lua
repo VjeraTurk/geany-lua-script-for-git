@@ -90,7 +90,7 @@ cmds={
 
 	geany.banner = "Geany Git assistant"
 
-	cmd="git --version"	--!! pokazuje ili output ili error
+	cmd="koko --version"	--!! pokazuje ili output ili error
 	handle = io.popen(cmd)
 	
 	result = handle:read("*a")
