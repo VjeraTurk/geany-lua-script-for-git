@@ -148,7 +148,6 @@ if result==''  then
 
 			dialog.label(dialog, "Pick files to add")
 			
-
 		end
 
 	end
