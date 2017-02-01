@@ -141,26 +141,27 @@ if result==''  then
 	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
 
 		if choice == true then
-			
-			local files = scandir(FILE_DIR_PATH)
+
 			local yes_no = {"Add","Cancel"}
 			local dialog= dialog.new ("banner", yes_no)
-			
 			dialog.label(dialog, "Pick files to add")
 
 				
-					for i,file in ipairs(files) do
-							dialog:checkbox(files[i], false,files[i])	
-						end
+			for i,file in ipairs(files) do
+					dialog:checkbox(files[i], false,files[i])	
+				end
 
 			local button, results = dialog:run()
-	
+
 			if results then
+
 				for key,value in pairs(results)
 					do
+					msg="\n"..key..":\t"..value
+					
 					if value == "1" then
-						msg="\n"..key..":\t"..value
-						geany.message(msg)						
+						geany.message(msg)
+						
 						cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
 						geany.message(cmd)
 						
@@ -169,12 +170,16 @@ if result==''  then
 						handle:close()
 						geany.message(result)
 						
-					end			
+					end
+				
 				end
 			end	
-		end
 	
+
+		end
+
 	end
+
 end
 
 --prije git comande, cd komanda u direktorij filea
