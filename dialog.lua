@@ -9,7 +9,7 @@ function scandir(directory)
     pfile:close()
     return t
 end
-
+--nema jebeni index 0 u lui -.-
 function listvalues(s)
     local t = { }
     for k,v in ipairs(s) do
@@ -31,7 +31,7 @@ function addFiles(path)
 
 	local button, results = dialog:run()
 	local cat={}
-	local i = 0
+	local i = 1
 	if results then
 
 		for key,value in pairs(results)
@@ -55,8 +55,8 @@ function addFiles(path)
 		
 		end
 		
-		
-		for j=0,i do
+		i=i-1
+		for j=1,i do
 		geany.message(cat[j])
 		end
 		geany.message(listvalues(cat))
