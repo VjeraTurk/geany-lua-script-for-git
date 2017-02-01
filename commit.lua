@@ -198,7 +198,7 @@ if result==''  then
 			
 			local list = listvalues( addFiles(FILE_DIR_PATH) )
 			
-			geany.message(list)
+			geany.message("ovo je ta lista:"..list)
 			
 				if(list) then
 					geany.banner = "Commit your changes"
