@@ -156,14 +156,11 @@ if result==''  then
 			local button, results = dialog:run()
 	
 			if results then
-
 				for key,value in pairs(results)
 					do
-					msg="\n"..key..":\t"..value
-					
 					if value == "1" then
-						geany.message(msg)
-						
+						msg="\n"..key..":\t"..value
+						geany.message(msg)						
 						cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
 						geany.message(cmd)
 						
@@ -172,16 +169,12 @@ if result==''  then
 						handle:close()
 						geany.message(result)
 						
-					end
-				
+					end			
 				end
 			end	
-
-
 		end
-
+	
 	end
-
 end
 
 --prije git comande, cd komanda u direktorij filea
