@@ -49,9 +49,10 @@ function addFiles(path)
 			do
 			if value == "1" then
 				
-				msg[i]=key
-				geany.message(msg[i])
+				msg[i]="\n"..key
 				i = i + 1 
+				geany.message(msg[i])
+				
 				cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
 				geany.message(cmd)
 				
@@ -67,10 +68,8 @@ function addFiles(path)
 		
 		geany.banner = "Commit your changes"
 		message=geany.input("Commit message", "added untracked file(s)")
-		
 		message=listvalues(msg)
 		geany.message(message)
-		
 		--[[
 			if message ~= nil then
 				cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
