@@ -52,8 +52,16 @@ function addFiles(path)
 				
 			end
 		
-		end
+		geany.banner = "Commit your changes"
+		message=geany.input("Commit message", "added untracked files")
+			if message ~= nil then
+				cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
+			else
+				cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
+			end
 		
+		end
+			
 	end	
 	
 end
