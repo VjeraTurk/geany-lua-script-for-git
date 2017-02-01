@@ -11,6 +11,7 @@
 -- or any later version.
 
 --dej dobro je
+--olah
 -- Define functions --
 debugEnabled = false
 
