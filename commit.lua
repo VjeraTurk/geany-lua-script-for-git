@@ -148,8 +148,7 @@ if result==''  then
 
 			dialog.label(dialog, "Pick files to add")
 			
-			
---[[
+		
 			local ch={}
 
 				for i,file in ipairs(files) do
@@ -158,7 +157,7 @@ if result==''  then
 
 			--ovdje
 	
-	]]
+
 			dialog.run(dialog)
 
 			geany.message(ch)
