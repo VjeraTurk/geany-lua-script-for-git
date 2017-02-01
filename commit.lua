@@ -20,15 +20,6 @@ function scandir(directory)
     return t
 end
 -- Funtion displays all files in argument folder and checkbox for each one, calls git add for each checked files
-
-function listvalues(s)
-    local t = { }
-    for k,v in ipairs(s) do
-        t[#t+1] = tostring(v)
-    end
-    return table.concat(t,"\n")
-end
-
 function addFiles(path)
 
 	local files = scandir(path)
@@ -43,12 +34,12 @@ function addFiles(path)
 	local button, results = dialog:run()
 
 	if results then
-		local i=0
-		
+
 		for key,value in pairs(results)
 			do
+			msg="\n"..key..":\t"..value
+			
 			if value == "1" then
-				msg[i]="\n"..key
 				geany.message(msg)
 				
 				cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
@@ -65,8 +56,7 @@ function addFiles(path)
 		
 		
 		geany.banner = "Commit your changes"
-		message=geany.input("Commit message", "added untracked file(s)")
-		
+		message=geany.input("Commit message", "added untracked files")
 			if message ~= nil then
 				cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
 			else
