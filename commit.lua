@@ -58,7 +58,6 @@ function addFiles()
 	
 end
 
-
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
 	["add_remote_origin"]="git add remote origin ",
@@ -227,3 +226,12 @@ end
 
 --komentar
 --komentar novi
+
+function getBrowserCommand()
+
+	if os.execute("firefox --version") == 0 then return "firefox"
+	elseif os.execute("google-chrome --version") == 0 then return "google-chrome"
+	else
+		return "diff"
+	end
+end
