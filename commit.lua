@@ -190,7 +190,7 @@ if result==''  then
 	if string.match(result,"Changes not staged for commit") or string.match(result,"untracked files present") then
 	
 	geany.banner = "Untracked files present or Changes not staged for commit"
-	choice = geany.confirm("Add untracked files to repository"  ,"			Add untracked files to your repository?			",true)
+	choice = geany.confirm("			Add untracked files to repository			"  ,"Add untracked files to your repository?",true)
 
 		if choice == true then
 			
