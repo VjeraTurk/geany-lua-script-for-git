@@ -25,6 +25,43 @@ function getBrowserCommand()
 	end
 end
 
+function addFiles()
+
+	local files = scandir(FILE_DIR_PATH)
+	local yes_no = {"Add","Cancel"}
+	local dialog= dialog.new ("banner", yes_no)
+	dialog.label(dialog, "Pick files to add")
+		
+	for i,file in ipairs(files) do
+			dialog:checkbox(files[i], false,files[i])	
+		end
+
+	local button, results = dialog:run()
+
+	if results then
+
+		for key,value in pairs(results)
+			do
+			msg="\n"..key..":\t"..value
+			
+			if value == "1" then
+				geany.message(msg)
+				
+				cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
+				geany.message(cmd)
+				
+				handle = io.popen(cmd)
+				result = handle:read("*a")
+				handle:close()
+				geany.message(result)
+				
+			end
+		
+		end
+	end	
+	
+end
+
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
 	["add_remote_origin"]="git add remote origin ",
@@ -141,40 +178,8 @@ if result==''  then
 	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
 
 		if choice == true then
-			local files = scandir(FILE_DIR_PATH)
-			local yes_no = {"Add","Cancel"}
-			local dialog= dialog.new ("banner", yes_no)
-			dialog.label(dialog, "Pick files to add")
-
-				
-			for i,file in ipairs(files) do
-					dialog:checkbox(files[i], false,files[i])	
-				end
-
-			local button, results = dialog:run()
-
-			if results then
-
-				for key,value in pairs(results)
-					do
-					msg="\n"..key..":\t"..value
-					
-					if value == "1" then
-						geany.message(msg)
-						
-						cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
-						geany.message(cmd)
-						
-						handle = io.popen(cmd)
-						result = handle:read("*a")
-						handle:close()
-						geany.message(result)
-						
-					end
-				
-				end
-			end	
-	
+		
+		addFiles()
 
 		end
 
