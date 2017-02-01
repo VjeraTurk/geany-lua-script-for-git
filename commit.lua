@@ -185,7 +185,8 @@ if result==''  then
 	handle:close()
 
 	geany.message(" "..cmd.." :\n"..result.."")
-
+--Changes not staged for commit:
+	
 	if string.match(result,"nothing added to commit but untracked files present") then
 	geany.banner = "Untracked files present"
 	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
