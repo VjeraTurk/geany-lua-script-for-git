@@ -147,16 +147,18 @@ if result==''  then
 			local yes_no = {"Add","Cancel"}
 			local dialog= dialog.new ("banner", yes_no)
 			dialog.label(dialog, "Pick files to add")
-
+			local ch
 			
 				for i,file in ipairs(files) do
-					dialog.checkbox ( dialog,"files", false, files[i])
+					ch[i]=dialog.checkbox ( dialog,"files", false, files[i])
 				end
 				
 			--ovdje	
-			local ch=dialog.run(dialog)
+			dialog.run(dialog)
 			
-			geany.message(ch[3])
+			geany.message(ch)
+			
+			geany.message(ch[1])
 		end
 	end
 
