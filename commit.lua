@@ -21,9 +21,9 @@ function scandir(directory)
     return t
 end
 
-function addFiles()
+function addFiles(path)
 
-	local files = scandir(FILE_DIR_PATH)
+	local files = scandir(path)
 	local yes_no = {"Add","Cancel"}
 	local dialog= dialog.new ("banner", yes_no)
 	dialog.label(dialog, "Pick files to add")
@@ -33,6 +33,8 @@ function addFiles()
 		end
 
 	local button, results = dialog:run()
+	local checked={}
+	local i = 1
 
 	if results then
 
@@ -41,9 +43,12 @@ function addFiles()
 			msg="\n"..key..":\t"..value
 			
 			if value == "1" then
+				cat[i]=key
+				--geany.message("Ovo je cat["..i.."] "..cat[i])
+				i=i+1
 				geany.message(msg)
 				
-				cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
+				cmd ="cd "..path.."  2>&1\ngit add "..key.."  2>&1"
 				geany.message(cmd)
 				
 				handle = io.popen(cmd)
@@ -54,7 +59,13 @@ function addFiles()
 			end
 		
 		end
-		
+			
+		i=i-1
+		for j=1,i do
+		geany.message(cat[j])
+		end
+		geany.message(listvalues(cat))
+	
 		
 	
 	end	
@@ -174,7 +185,7 @@ if result==''  then
 
 		if choice == true then
 		
-		addFiles()
+		addFiles(FILE_DIR_PATH)
 
 		end
 
