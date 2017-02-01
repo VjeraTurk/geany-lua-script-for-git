@@ -195,8 +195,10 @@ if result==''  then
 	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
 
 		if choice == true then
-		
+			
 			local list = listvalues( addFiles(FILE_DIR_PATH) )
+			
+			geany.message(list)
 			
 				if(list) then
 					geany.banner = "Commit your changes"
