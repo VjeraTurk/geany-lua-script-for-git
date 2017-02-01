@@ -1,11 +1,9 @@
 --[[
 	Opis
 	
-	start script: shortcut ctrl+š
-	
 	]]
+	
 -- Lua implementation of PHP scandir function
-
 function scandir(directory)
 
     local i, t, popen = 0, {}, io.popen
@@ -16,7 +14,6 @@ function scandir(directory)
     end
     pfile:close()
     return t
-
 end	
 
 function getBrowserCommand()
@@ -27,16 +24,16 @@ function getBrowserCommand()
 		return "diff"
 	end
 end
-	--testing git diff
-	cmds={
-	["force_local_users"]="git config --global user.useConfigOnly true",
+--testing git diff
+
+cmds={
+	--["force_local_users"]="git config --global user.useConfigOnly true",
 	["add_remote_origin"]="git add remote origin ",
-	["clone"]="git clone", --gitlab Public The project can be cloned without any authentication.
+--  ["clone"]="git clone", --gitlab Public The project can be cloned without any authentication.
 	["commit"]="git commit -m ",
-	["config_name"]="git config user.name ",--"Your Name Here"
+--  ["config_name"]="git config user.name ",--"Your Name Here"
 	["config_email"]="git config user.email ",--"your@email.com"
 --	["install"]="apt-get install git"
---	test user.email 
 	}
 	
 	flags={
@@ -54,11 +51,10 @@ end
 		if string.match(result,"git: command not found") then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ yum install git \nFedora:\n $ yum install git"
 			geany.message(install_msg)
+			return
 		end
 		
 	--username=geany.input("username", "")
-
-	
 
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
 	local FILE_DIR_PATH = geany.dirname(geany.filename())
@@ -112,11 +108,11 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 						
 						local browser = getBrowserCommand()
 							if browser ~= "diff" then
-								--[[
 								cmd=""..browser.." "..origin..""
-								handle = os.execute(cmd)
-								handle:close()
-								]]
+								 os.execute(string.format('xdg-open "%s"', origin))
+								--handle = io.popen(cmd)
+								--handle:close()
+								
 								geany.message("ovdje sam")
 							end
 					
