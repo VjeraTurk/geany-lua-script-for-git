@@ -104,19 +104,11 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 					handle:close()
 					
 					if result=='' then
-					geany.message(" "..cmd.." :\n"..result.."")				
-						
-						local browser = getBrowserCommand()
-							if browser ~= "diff" then
-								cmd=""..browser.." "..origin..""
-								 os.execute(string.format('xdg-open "%s"', origin))
-								--handle = io.popen(cmd)
-								--handle:close()
-								
-								geany.message("ovdje sam")
-							end
+					--geany.message(" "..cmd.." :\n"..result.."")										
 					
-						geany.message("Hurray!", "Repositories are now linked.")
+					handel=os.execute(string.format('xdg-open "%s"', origin))
+					handle:close()	
+					geany.message("Hurray!", "Repositories are now linked. Each time you push your code it will be saved on your remote origin. ")
 					
 					end
 				end
@@ -130,7 +122,7 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 end
 
 if result==''  then
-
+	geany.banner = "Commit your changes"
 	message=geany.input("Commit message", "no comment")
 
 	if message ~= nil then
