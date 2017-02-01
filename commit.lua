@@ -171,16 +171,9 @@ end
 
 if result==''  then
 	
-	
-	local yes_no = {"Commit","Cancel","Add more files"}
-	local dlgc = dialog.new ("Commit your changes", yes_no) 
-	--dialog.input("Commit message", "no comment")
-	dlgc:text("msg", "no comment","Commit message:")
-	
-	-- Show the dialog
-	local button, results = dlgc:run()
-	
-	message=results[msg]
+	geany.banner = "Commit your changes"
+	message=geany.input("Commit message", "no comment")
+
 	if message ~= nil then
 		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
 	else
