@@ -156,26 +156,42 @@ if result==''  then
 			local button, results = dialog:run()
 	
 			if results then
-
+				
 				for key,value in pairs(results)
 					do
-					msg="\n"..key..":\t"..value
-					
 					if value == "1" then
-						geany.message(msg)
-						
+						--msg="\n"..key..":\t"..value
+						--geany.message(msg)						
 						cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
-						geany.message(cmd)
-						
+						--geany.message(cmd)
 						handle = io.popen(cmd)
 						result = handle:read("*a")
 						handle:close()
-						geany.message(result)
-						
-					end			
+						--geany.message(result)
+				end			
+
+				geany.banner = "Commit your changes"
+				message=geany.input("Commit message", "added untracked files")
+			
+				if message ~= nil then
+					cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
+				else
+					cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"added untracked files\""
 				end
-			end	
+
+				handle = io.popen(cmd)
+				result = handle:read("*a")
+				handle:close()
+				geany.message(" "..cmd.." :\n"..result.."")
+
+			end
+	
+
+			end
+			
+				
 		end
+	
 	end
 end
 
