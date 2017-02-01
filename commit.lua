@@ -2,8 +2,6 @@
 	Opis
 
 	]]
-
-
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
     local FILE_DIR_PATH = geany.dirname(geany.filename())
 	local FILE_NAME = geany.basename(geany.filename())
@@ -197,8 +195,6 @@ if result==''  then
 		if choice == true then
 			
 			local list = listvalues( addFiles(FILE_DIR_PATH) )
-			
-			geany.message("ovo je ta lista:"..list)
 			
 				if(list ~='') then
 					geany.banner = "Commit your changes"
