@@ -19,10 +19,10 @@ function scandir(directory)
     pfile:close()
     return t
 end
--- Funtion displays all files in current file folder and checkbox for each , calls git add for each checked file
-function addFiles()
+-- Funtion displays all files in current file folder and checkbox for each , calls git add for each checked files
+function addFiles(path)
 
-	local files = scandir(FILE_DIR_PATH)
+	local files = scandir(path)
 	local yes_no = {"Add","Cancel"}
 	local dialog= dialog.new ("banner", yes_no)
 	dialog.label(dialog, "Pick files to add")
@@ -32,28 +32,29 @@ function addFiles()
 		end
 
 	local button, results = dialog:run()
-	
-	if button[1] then
-		if results then
 
-			for key,value in pairs(results)
-				do
-				msg="\n"..key..":\t"..value
+	if results then
+
+		for key,value in pairs(results)
+			do
+			msg="\n"..key..":\t"..value
+			
+			if value == "1" then
+				geany.message(msg)
 				
-				if value == "1" then
-					geany.message(msg)
-					
-					cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
-					geany.message(cmd)
-					
-					handle = io.popen(cmd)
-					result = handle:read("*a")
-					handle:close()
-					geany.message(result)				
-				end
+				cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
+				geany.message(cmd)
+				
+				handle = io.popen(cmd)
+				result = handle:read("*a")
+				handle:close()
+				geany.message(result)
+				
 			end
-		end	
-	end
+		
+		end
+	end	
+	
 end
 
 --[[ funkcija koju ne koristimo
@@ -179,9 +180,7 @@ if result==''  then
 	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
 
 		if choice == true then
-		
-		addFiles()
-
+		addFiles(FILE_DIR_PATH)
 		end
 
 	end
