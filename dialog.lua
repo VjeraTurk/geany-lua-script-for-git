@@ -22,8 +22,10 @@ end
 
 	local files = scandir(FILE_DIR_PATH)
 	
-	local conc=listalues(files)
+	local conc=listvalues(files)
+
 	geany.message(conc)
+
 --[[
 	local yes_no = {"Add","Cancel"}
 	local dialog= dialog.new ("banner", yes_no)
