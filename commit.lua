@@ -19,7 +19,7 @@ function scandir(directory)
     pfile:close()
     return t
 end
--- Funtion displays all files in argument folder and checkbox for each one, calls git add for each checked files
+-- Funtion displays all files in folder and checkbox for each , calls git add for each checked files
 function addFiles(path)
 
 	local files = scandir(path)
@@ -53,13 +53,6 @@ function addFiles(path)
 			end
 		
 		end
-			geany.banner = "Commit your changes"
-			message=geany.input("Commit message", "added untracked files")
-				if message ~= nil then
-					cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
-				else
-					cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
-				end
 	end	
 	
 end
@@ -166,15 +159,11 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 
 end
 
-function commit(message)
-
-	
-end
 
 if result==''  then
-
 	geany.banner = "Commit your changes"
 	message=geany.input("Commit message", "no comment")
+
 	if message ~= nil then
 		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
 	else
@@ -192,8 +181,8 @@ if result==''  then
 	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
 
 		if choice == true then
-			addFiles(FILE_DIR_PATH)
-			
+		addFiles(FILE_DIR_PATH)
+		
 		end
 
 	end
