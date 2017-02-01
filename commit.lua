@@ -19,7 +19,7 @@ function scandir(directory)
     pfile:close()
     return t
 end
--- Funtion displays all files in current file folder and checkbox for each , calls git add for each 
+
 function addFiles()
 
 	local files = scandir(FILE_DIR_PATH)
