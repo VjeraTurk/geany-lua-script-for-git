@@ -147,7 +147,7 @@ if result==''  then
 			local yes_no = {"Add","Cancel"}
 			local dialog= dialog.new ("banner", yes_no)
 			dialog.label(dialog, "Pick files to add")
-			local ch
+			local ch={}
 			
 				for i,file in ipairs(files) do
 					ch[i]=dialog.checkbox ( dialog,"files", false, files[i])
