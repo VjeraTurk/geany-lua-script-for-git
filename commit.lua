@@ -26,7 +26,7 @@ function listvalues(s)
     for k,v in ipairs(s) do
         t[#t+1] = tostring(v)
     end
-    return table.concat(t,"\n")
+    return table.concat(t,'\t')
 end
 function addFiles(path)
 
