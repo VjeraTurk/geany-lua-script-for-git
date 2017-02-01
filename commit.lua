@@ -3,10 +3,9 @@
 
 	]]
 
-
-	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
-    local FILE_DIR_PATH = geany.dirname(geany.filename())
-	local FILE_NAME = geany.basename(geany.filename())
+local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
+local FILE_DIR_PATH = geany.dirname(geany.filename())
+local FILE_NAME = geany.basename(geany.filename())
 
 -- Lua implementation of PHP scandir function
 function scandir(directory)
@@ -20,16 +19,7 @@ function scandir(directory)
     pfile:close()
     return t
 end
-
-function getBrowserCommand()
-
-	if os.execute("firefox --version") == 0 then return "firefox"
-	elseif os.execute("google-chrome --version") == 0 then return "google-chrome"
-	else
-		return "diff"
-	end
-end
-
+-- Funtion displays all files in current file folder and checkbox for each , calls git add for each checked file
 function addFiles()
 
 	local files = scandir(FILE_DIR_PATH)
@@ -42,30 +32,40 @@ function addFiles()
 		end
 
 	local button, results = dialog:run()
-
-	if results then
-
-		for key,value in pairs(results)
-			do
-			msg="\n"..key..":\t"..value
-			
-			if value == "1" then
-				geany.message(msg)
-				
-				cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
-				geany.message(cmd)
-				
-				handle = io.popen(cmd)
-				result = handle:read("*a")
-				handle:close()
-				geany.message(result)
-				
-			end
-		
-		end
-	end	
 	
+	if button[1] then
+		if results then
+
+			for key,value in pairs(results)
+				do
+				msg="\n"..key..":\t"..value
+				
+				if value == "1" then
+					geany.message(msg)
+					
+					cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
+					geany.message(cmd)
+					
+					handle = io.popen(cmd)
+					result = handle:read("*a")
+					handle:close()
+					geany.message(result)				
+				end
+			end
+		end	
+	end
 end
+
+--[[ funkcija koju ne koristimo
+function getBrowserCommand()
+
+	if os.execute("firefox --version") == 0 then return "firefox"
+	elseif os.execute("google-chrome --version") == 0 then return "google-chrome"
+	else
+		return "diff"
+	end
+end
+]]--
 
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
