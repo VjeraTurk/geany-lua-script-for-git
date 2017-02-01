@@ -30,29 +30,36 @@ function addFiles(path)
 		end
 
 	local button, results = dialog:run()
-
+	local cat={}
+	local i = -1
 	if results then
 
 		for key,value in pairs(results)
 			do
-			msg="\n"..key..":\t"..value
-			
-			if value == "1" then
-				geany.message(msg)
+--			msg="\n"..key..":\t"..value
+			if value == "1" then				
+				i=i+1
+				cat[i]=key
+				geany.message("Ovo je cat["..i.."] "..cat[i])
+				
+				--geany.message(msg)
+				--[[
 				
 				cmd ="cd "..path.."  2>&1\ngit add "..key.."  2>&1"
 				geany.message(cmd)
-				
 				handle = io.popen(cmd)
 				result = handle:read("*a")
 				handle:close()
 				geany.message(result)
-				
+				]]
 			end
 		
 		end
 		
-		
+		for j=0,i do
+		geany.message(cat[j])
+		end
+		geany.message(listvalues(cat))
 	
 	end	
 	
