@@ -3,7 +3,12 @@
 
 	]]
 
+<<<<<<< HEAD
 -- Lua implementation of PHP scandir function
+=======
+-- f-ja vraća tablicu svih foldera u direktoriju koji primi kao argument
+
+>>>>>>> 289cccb4826d2e015d07b5d98231b9735811b406
 function scandir(directory)
 
     local i, t, popen = 0, {}, io.popen
@@ -24,9 +29,17 @@ function getBrowserCommand()
 		return "diff"
 	end
 end
+<<<<<<< HEAD
 
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
+=======
+	
+--komande u tablici, da ne moramo pisati svaki put	
+		cmds={
+	["version"]="git --version",
+	["force_local_users"]="git config --global user.useConfigOnly true",
+>>>>>>> 289cccb4826d2e015d07b5d98231b9735811b406
 	["add_remote_origin"]="git add remote origin ",
 --  ["clone"]="git clone", --gitlab Public The project can be cloned without any authentication.
 	["commit"]="git commit -m ",
@@ -40,8 +53,22 @@ cmds={
 	}
 
 	geany.banner = "Geany Git assistant"
+<<<<<<< HEAD
 
 	cmd="git --version"	--!! pokazuje ili output ili error
+=======
+	
+--provjeravamo je li git instaliran
+	
+	cmd="git --version"	
+	if os.execute(cmd) ~= 0 then
+			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ yum install git \nFedora:\n $ yum install git"
+			geany.message(install_msg)			
+			return --exit script
+		end
+		
+--[[	 alternativno
+>>>>>>> 289cccb4826d2e015d07b5d98231b9735811b406
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
@@ -52,9 +79,16 @@ cmds={
 			geany.message(install_msg)
 			return
 		end
+<<<<<<< HEAD
 
 	--username=geany.input("username", "")
 
+=======
+]]		
+	--username=geany.input("username", "")
+	--function dialog.password ( dlg, key, default, prompt )--Identical to the text() function, except that the contents of the entry box are "masked", the characters are displayed as asterisks. 
+	
+>>>>>>> 289cccb4826d2e015d07b5d98231b9735811b406
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
 	local FILE_DIR_PATH = geany.dirname(geany.filename())
 	local FILE_NAME = geany.basename(geany.filename())
@@ -69,6 +103,7 @@ cmds={
 	handle:close()
 	--geany.message(""..cmd.." :\n"..result.."")
 
+<<<<<<< HEAD
 if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
 
 	geany.banner = "Not a git repository"
@@ -86,11 +121,14 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 		cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 		--!! 2>&1 pokazuje ili output ili error
 		--!! ako ulancavamo 2 komande, između stavljamo \n
+=======
+	if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
+>>>>>>> 289cccb4826d2e015d07b5d98231b9735811b406
 
-		handle = io.popen(cmd)
-		result = handle:read("*a")
-		handle:close()
+		geany.banner = "Not a git repository"
+		local choice = geany.confirm ( "Your file could not be commited", "This directory is not a git repository (or any of the parent directories. Init new repository?", true )
 
+<<<<<<< HEAD
 		result=''
 
 			geany.banner = "Add remote origin"
@@ -109,13 +147,56 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 					handle:close()
 					geany.message("Hurray!", "Repositories are now linked. Each time you push your code it will be saved on your remote origin. ")
 
+=======
+		if choice == true then
+			
+			geany.banner = "Init new repository"
+			cmd = "git init "..FILE_DIR_PATH.."  2>&1"	-- pokazuje ili output ili error
+			handle = io.popen(cmd)
+			result = handle:read("*a")
+			handle:close()
+			geany.message(result)
+
+			cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
+			--!! 2>&1 pokazuje ili output ili error
+			--!! ako ulancavamo 2 komande, između stavljamo \n
+
+			handle = io.popen(cmd)
+			result = handle:read("*a")
+			handle:close()
+
+			result=''
+
+				geany.banner = "Add remote origin"
+				choice = geany.confirm ( "Add remote origin", "This directory is only local. Link to web repository? (add origin)", true )
+				origin=geany.input("Please use public repository.", "https://")
+					if choice == true then 
+						cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
+						handle = io.popen(cmd)
+						result = handle:read("*a")
+						handle:close()
+						
+						if result=='' then
+						geany.message(" "..cmd.." :\n"..result.."")				
+							
+							local browser = getBrowserCommand()
+								if browser ~= "diff" then
+									--[[
+									cmd=""..browser.." "..origin..""
+									handle = os.execute(cmd)
+									handle:close()
+									]]
+									geany.message("ovdje sam")
+								end
+						
+							geany.message("Hurray!", "Repositories are now linked.")
+						
+						end
+>>>>>>> 289cccb4826d2e015d07b5d98231b9735811b406
 					end
-				end
-		--psw=geany.input("password", "")
+			--psw=geany.input("password", "")
 
-	elseif choice==false then
-	elseif choice==nil then
-
+<<<<<<< HEAD
 	end
 
 end
@@ -123,23 +204,31 @@ end
 if result==''  then
 	geany.banner = "Commit your changes"
 	message=geany.input("Commit message", "no comment")
+=======
+		elseif choice==false then
+				return
+		elseif choice==nil then
+				return
+		end
+>>>>>>> 289cccb4826d2e015d07b5d98231b9735811b406
 
-	if message ~= nil then
-		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
-	else
-		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
-	end
+	elseif result==''  then
 
-	handle = io.popen(cmd)
-	result = handle:read("*a")
-	handle:close()
+		message=geany.input("Commit message", "no comment")
+		
+		if message ~= nil then
+			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
+		else
+			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
+		end
 
-	geany.message(" "..cmd.." :\n"..result.."")
+		handle = io.popen(cmd)
+		result = handle:read("*a")
+		handle:close()
 
-	if string.match(result,"nothing added to commit but untracked files present") then
-	geany.banner = "Untracked files present"
-	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
+		--geany.message(" "..cmd.." :\n"..result.."")
 
+<<<<<<< HEAD
 		if choice == true then
 
 			local files = scandir(FILE_DIR_PATH)
@@ -165,10 +254,31 @@ if result==''  then
 
 		end
 
+=======
+		if string.match(result,"nothing added to commit but untracked files present") then
+		geany.banner = "Untracked files present"
+		choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
+
+			if choice == true then
+				
+				local files = scandir(FILE_DIR_PATH)
+				local yes_no = {"Add","Cancel"}
+				local dialog= dialog.new ("banner", yes_no)
+				dialog.label(dialog, "Pick files to add")
+				
+					for i in ipairs(files) do
+						dialog.checkbox(dialog,"files", false, files[i])		
+					end
+				
+				result = dialog.run(dialog)
+				geany.message(result)
+			
+			end
+>>>>>>> 289cccb4826d2e015d07b5d98231b9735811b406
 	end
 
 end
-
+--proba goran
 --prije git comande, cd komanda u direktorij filea
 --!! local cmd="echo "..geany.filename().." > SomeFile2.txt" : ne radi, mora biti cijeli filepath od SomeFile2.txt
 --local test_cmd="echo Neki tekst u novi file >/usr/share/geany-plugins/geanylua/edit/someFile2.txt"

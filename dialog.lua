@@ -28,7 +28,13 @@ end
 
 local button, results = dialog:run()
 
-		
-	geany.message(a)
-	geany.message(result[1])
+if results then
+	
+	for key,value in pairs(results)
+		do
+		msg="\n"..key..":\t"..value
+		geany.message(msg)
+	
+	end
+end	
 	
