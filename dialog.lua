@@ -15,17 +15,15 @@ end
 	local dialog= dialog.new ("banner", yes_no)
 
 	dialog.label(dialog, "Pick files to add")
-	local choosen = {}
+
 	local files = scandir(FILE_DIR_PATH)
 		
 			for i,file in ipairs(files) do
 					dialog:checkbox(files[i], false,files[i])	
 				end
-			
 
-local button, results = dialog:run()
-
-local cmd
+	local button, results = dialog:run()
+	local cmd
 
 if results then
 
@@ -42,6 +40,7 @@ if results then
 			handle = io.popen(cmd)
 			result = handle:read("*a")
 			handle:close()
+			geany.message(result)
 			
 		end
 	
