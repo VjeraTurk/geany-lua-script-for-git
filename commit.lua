@@ -3,6 +3,11 @@
 
 	]]
 
+
+	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
+    local FILE_DIR_PATH = geany.dirname(geany.filename())
+	local FILE_NAME = geany.basename(geany.filename())
+
 -- Lua implementation of PHP scandir function
 function scandir(directory)
 
@@ -91,10 +96,6 @@ cmds={
 		end
 
 	--username=geany.input("username", "")
-
-	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
-	local FILE_DIR_PATH = geany.dirname(geany.filename())
-	local FILE_NAME = geany.basename(geany.filename())
 	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
 
 	local cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
