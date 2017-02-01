@@ -10,6 +10,7 @@
 -- Distribution is permitted under the terms of the GPLv2
 -- or any later version.
 
+--dej dobro je
 -- Define functions --
 debugEnabled = false
 
