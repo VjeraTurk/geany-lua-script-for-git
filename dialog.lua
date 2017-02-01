@@ -19,21 +19,31 @@ end
 	local files = scandir(FILE_DIR_PATH)
 		
 			for i,file in ipairs(files) do
-			--		dialog.checkbox ( dialog,"files", false, files[i])
 					dialog:checkbox(files[i], false,files[i])	
 				end
 			
 
-	dialog.hr(dialog)
-
 local button, results = dialog:run()
 
+local cmd
+
 if results then
-	
+
 	for key,value in pairs(results)
 		do
 		msg="\n"..key..":\t"..value
-		geany.message(msg)
+		
+		if value == "1" then
+			geany.message(msg)
+			
+			cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
+			geany.message(cmd)
+			
+			handle = io.popen(cmd)
+			result = handle:read("*a")
+			handle:close()
+			
+		end
 	
 	end
 end	
