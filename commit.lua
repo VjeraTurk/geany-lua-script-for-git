@@ -1,6 +1,13 @@
 --[[
 	Opis
 
+	--Velicinu prozora mijenjam s tabovima unutar imena
+	--ne radi provjera koko --version, nastavlja s komitom
+	--	geany.banner = "Commit your changes"
+		message=geany.input("Commit message", "no comment")
+		
+		prozor ima Ok i Cancel (i x) ali izvrši commit bez obzira, nema provjere sta je odabrano -> napraviti dialog ili geany confirm
+	-- dva dialoga za redom ne rade! Greška na new u drugom
 	]]
 
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
