@@ -90,14 +90,15 @@ cmds={
 
 	geany.banner = "Geany Git assistant"
 
-	cmd="koko --version"	--!! pokazuje ili output ili error
+	cmd="git --version"	--!! pokazuje ili output ili error
 	handle = io.popen(cmd)
 	
 	result = handle:read("*a")
 	handle:close()
+	
 	geany.message(" "..cmd.." :\n"..result.."")
 
-		if string.match(result,": command not found") then
+		if string.match(result,"git: command not found") then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ yum install git \nFedora:\n $ yum install git"
 			geany.message(install_msg)
 			return --izlazi iz skripte
