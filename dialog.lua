@@ -81,3 +81,26 @@ end
 	dialog:password("pass", nil,  "Password:")
 	
 	button, results = dialog:run()
+
+	local btn = {"Commit","Cancel","Add more files"}
+	local dlgc = dialog.new ("Commit your changes", btn) 
+	dlgc:text("msg", "no comment","Commit message:")
+	
+	-- Show the dialog
+	local button, results = dlgc:run()
+	
+	message=results[msg]
+	geany.message(message)
+	
+	if message ~= nil then
+		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
+	else
+		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
+	end
+
+	handle = io.popen(cmd)
+	result = handle:read("*a")
+	handle:close()
+
+	geany.message(" "..cmd.." :\n"..result.."")
+	
