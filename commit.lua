@@ -3,10 +3,6 @@
 
 	]]
 
-local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
-local FILE_DIR_PATH = geany.dirname(geany.filename())
-local FILE_NAME = geany.basename(geany.filename())
-
 -- Lua implementation of PHP scandir function
 function scandir(directory)
 
@@ -18,6 +14,15 @@ function scandir(directory)
     end
     pfile:close()
     return t
+end
+
+function getBrowserCommand()
+
+	if os.execute("firefox --version") == 0 then return "firefox"
+	elseif os.execute("google-chrome --version") == 0 then return "google-chrome"
+	else
+		return "diff"
+	end
 end
 
 function addFiles()
@@ -57,17 +62,6 @@ function addFiles()
 	
 end
 
---[[ funkcija koju ne koristimo
-function getBrowserCommand()
-
-	if os.execute("firefox --version") == 0 then return "firefox"
-	elseif os.execute("google-chrome --version") == 0 then return "google-chrome"
-	else
-		return "diff"
-	end
-end
-]]--
-
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
 	["add_remote_origin"]="git add remote origin ",
@@ -97,6 +91,10 @@ cmds={
 		end
 
 	--username=geany.input("username", "")
+
+	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
+	local FILE_DIR_PATH = geany.dirname(geany.filename())
+	local FILE_NAME = geany.basename(geany.filename())
 	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
 
 	local cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
