@@ -44,10 +44,11 @@ function addFiles(path)
 
 	if results then
 		local i=0
-		
+		local msg={}
 		for key,value in pairs(results)
 			do
 			if value == "1" then
+				
 				msg[i]="\n"..key
 				i = i + 1 
 				geany.message(msg)
