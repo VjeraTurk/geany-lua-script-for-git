@@ -200,7 +200,7 @@ if result==''  then
 			
 			geany.message("ovo je ta lista:"..list)
 			
-				if(list) then
+				if(list ~='') then
 					geany.banner = "Commit your changes"
 					message=geany.input("Commit message", "Added untracked: "..list)
 
