@@ -9,9 +9,22 @@ function scandir(directory)
     pfile:close()
     return t
 end
+
+function listvalues(s)
+    local t = { }
+    for k,v in ipairs(s) do
+        t[#t+1] = tostring(v)
+    end
+    return table.concat(t,"\n")
+end
+
 	local FILE_DIR_PATH = geany.dirname(geany.filename())
 
 	local files = scandir(FILE_DIR_PATH)
+	
+	local conc=listalues(files)
+	geany.message(conc)
+--[[
 	local yes_no = {"Add","Cancel"}
 	local dialog= dialog.new ("banner", yes_no)
 	
@@ -26,12 +39,14 @@ end
 	local cmd
 
 	if results then
+		
 
 		for key,value in pairs(results)
 			do
 			msg="\n"..key..":\t"..value
-			
 			if value == "1" then
+			
+
 				geany.message(msg)
 				
 				cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
@@ -43,7 +58,8 @@ end
 				geany.message(result)
 				
 			end
-		
 		end
+	
 	end	
 	
+]]
