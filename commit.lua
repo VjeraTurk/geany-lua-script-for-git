@@ -47,13 +47,12 @@ function addFiles(path)
 
 		for key,value in pairs(results)
 			do
-			msg="\n"..key..":\t"..value
+		--	msg="\n"..key..":\t"..value
 			
 			if value == "1" then
 				checked[i]=key
-				--geany.message("Ovo je cat["..i.."] "..cat[i])
 				i=i+1
-				geany.message(msg)
+				--geany.message(msg)
 				
 				cmd ="cd "..path.."  2>&1\ngit add "..key.."  2>&1"
 				geany.message(cmd)
@@ -66,12 +65,13 @@ function addFiles(path)
 			end
 		
 		end
-			
+	--[[		
 		i=i-1
 		for j=1,i do
 		geany.message(checked[j])
 		end
-		geany.message(listvalues(checked))
+	]]
+		return checked
 	
 		
 	
@@ -192,7 +192,7 @@ if result==''  then
 
 		if choice == true then
 		
-		addFiles(FILE_DIR_PATH)
+			geany.message( listvalues( addFiles(FILE_DIR_PATH) ))
 
 		end
 
