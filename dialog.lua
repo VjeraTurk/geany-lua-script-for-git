@@ -31,17 +31,16 @@ function addFiles(path)
 
 	local button, results = dialog:run()
 	local cat={}
-	local i = -1
+	local i = 0
 	if results then
 
 		for key,value in pairs(results)
 			do
 --			msg="\n"..key..":\t"..value
 			if value == "1" then				
-				i=i+1
 				cat[i]=key
 				geany.message("Ovo je cat["..i.."] "..cat[i])
-				
+				i=i+1
 				--geany.message(msg)
 				--[[
 				
@@ -55,6 +54,7 @@ function addFiles(path)
 			end
 		
 		end
+		
 		
 		for j=0,i do
 		geany.message(cat[j])
