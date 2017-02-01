@@ -1,8 +1,8 @@
 --[[
 	Opis
-	
+
 	]]
-	
+
 -- Lua implementation of PHP scandir function
 function scandir(directory)
 
@@ -14,17 +14,16 @@ function scandir(directory)
     end
     pfile:close()
     return t
-end	
+end
 
 function getBrowserCommand()
-	
+
 	if os.execute("firefox --version") == 0 then return "firefox"
 	elseif os.execute("google-chrome --version") == 0 then return "google-chrome"
 	else
 		return "diff"
 	end
 end
---testing git diff
 
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
@@ -35,25 +34,25 @@ cmds={
 	["config_email"]="git config user.email ",--"your@email.com"
 --	["install"]="apt-get install git"
 	}
-	
+
 	flags={
 	["upsteream"]=" -u "
 	}
 
 	geany.banner = "Geany Git assistant"
-	
+
 	cmd="git --version"	--!! pokazuje ili output ili error
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
 	geany.message(result)
-	
+
 		if string.match(result,"git: command not found") then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ yum install git \nFedora:\n $ yum install git"
 			geany.message(install_msg)
 			return
 		end
-		
+
 	--username=geany.input("username", "")
 
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
@@ -76,7 +75,7 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 	local choice = geany.confirm ( "Your file could not be commited", "This directory is not a git repository (or any of the parent directories. Init new repository?", true )
 
 	if choice==true then
-		
+
 		geany.banner = "Init new repository or clone existing one"
 		cmd="git init "..FILE_DIR_PATH.."  2>&1"	--!! pokazuje ili output ili error
 		handle = io.popen(cmd)
@@ -97,19 +96,19 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 			geany.banner = "Add remote origin"
 			choice = geany.confirm ( "Add remote origin", "This directory is only local. Link to web repository? (add origin)", true )
 			origin=geany.input("Please use public repository.", "https://")
-				if choice == true then 
+				if choice == true then
 					cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
 					handle = io.popen(cmd)
 					result = handle:read("*a")
 					handle:close()
-					
+
 					if result=='' then
-					--geany.message(" "..cmd.." :\n"..result.."")										
-					
+					--geany.message(" "..cmd.." :\n"..result.."")
+
 					handel=os.execute(string.format('xdg-open "%s"', origin))
-					handle:close()	
+					handle:close()
 					geany.message("Hurray!", "Repositories are now linked. Each time you push your code it will be saved on your remote origin. ")
-					
+
 					end
 				end
 		--psw=geany.input("password", "")
@@ -142,22 +141,28 @@ if result==''  then
 	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
 
 		if choice == true then
-			
+
 			local files = scandir(FILE_DIR_PATH)
 			local yes_no = {"Add","Cancel"}
-			local dialog= dialog.new ("banner", yes_no)
+			local dialog= dialog.new ("Add more files to commit", yes_no)
+
 			dialog.label(dialog, "Pick files to add")
-			local ch={}
 			
+			
+--[[
+			local ch={}
+
 				for i,file in ipairs(files) do
 					dialog.checkbox ( dialog,"files", false, files[i])
 				end
-				
-			--ovdje	
-			ch = dialog.run(dialog)
-			
+
+			--ovdje
+	
+	]]
+			dialog.run(dialog)
+
 			geany.message(ch)
-			
+
 		end
 
 	end
@@ -205,7 +210,7 @@ end
 	-- Require setting user.name and email per-repo:
 	--$ git config --global user.useConfigOnly true
 	-- Remove email address from global config:
-	
+
 	--$ git config --global --unset-all user.email
 	--$ git config --global --unset-all user.name
 
