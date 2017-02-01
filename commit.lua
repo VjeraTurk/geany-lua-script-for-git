@@ -43,7 +43,7 @@ function addFiles(path)
 			msg="\n"..key..":\t"..value
 			
 			if value == "1" then
-				cat[i]=key
+				checked[i]=key
 				--geany.message("Ovo je cat["..i.."] "..cat[i])
 				i=i+1
 				geany.message(msg)
@@ -62,9 +62,9 @@ function addFiles(path)
 			
 		i=i-1
 		for j=1,i do
-		geany.message(cat[j])
+		geany.message(checked[j])
 		end
-		geany.message(listvalues(cat))
+		geany.message(listvalues(checked))
 	
 		
 	
