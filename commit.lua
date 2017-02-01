@@ -156,7 +156,7 @@ if result==''  then
 			--ovdje	
 			dialog.run(dialog)
 			
-			geany.message(ch)
+			--geany.message(ch)
 			
 			geany.message(ch[1])
 		end
