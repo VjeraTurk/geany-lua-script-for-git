@@ -95,6 +95,7 @@ cmds={
 
 	cmd="git --version"	--!! pokazuje ili output ili error
 	handle = io.popen(cmd)
+	
 	result = handle:read("*a")
 	handle:close()
 	geany.message(result)
@@ -169,9 +170,17 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 end
 
 if result==''  then
-	geany.banner = "Commit your changes"
-	message=geany.input("Commit message", "no comment")
-
+	
+	
+	local yes_no = {"Commit","Cancel","Add more files"}
+	local dlgc = dialog.new ("Commit your changes", yes_no) 
+	--dialog.input("Commit message", "no comment")
+	dlgc:text("msg", "no comment","Commit message:")
+	
+	-- Show the dialog
+	local button, results = dlgc:run()
+	
+	message=results[msg]
 	if message ~= nil then
 		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
 	else
@@ -183,7 +192,8 @@ if result==''  then
 	handle:close()
 
 	geany.message(" "..cmd.." :\n"..result.."")
---Changes not staged for commit or untracked files present
+	
+	--Changes not staged for commit or untracked files present
 	
 	--if string.match(result,"nothing added to commit but untracked files present") then
 	
