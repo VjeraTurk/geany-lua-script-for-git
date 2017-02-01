@@ -2,6 +2,7 @@
 	Opis
 
 	]]
+
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
     local FILE_DIR_PATH = geany.dirname(geany.filename())
 	local FILE_NAME = geany.basename(geany.filename())
@@ -18,7 +19,7 @@ function scandir(directory)
     pfile:close()
     return t
 end
---nema jebeni index 0 u lui -.-
+--spoji vrijednosti u tablici u  dugacak string
 function listvalues(s)
     local t = { }
     for k,v in ipairs(s) do
@@ -26,6 +27,7 @@ function listvalues(s)
     end
     return table.concat(t,'\t')
 end
+--ispisuje checkboxove svih fileova u folderu čiji path primi, radi git add na odabranima 
 function addFiles(path)
 
 	local files = scandir(path)
@@ -46,19 +48,17 @@ function addFiles(path)
 		for key,value in pairs(results)
 			do
 		--	msg="\n"..key..":\t"..value
-			
 			if value == "1" then
 				checked[i]=key
 				i=i+1
 				--geany.message(msg)
 				
 				cmd ="cd "..path.."  2>&1\ngit add "..key.."  2>&1"
-				geany.message(cmd)
 				
 				handle = io.popen(cmd)
 				result = handle:read("*a")
 				handle:close()
-				geany.message(result)
+				geany.message(" "..cmd.." :\n"..result.."")
 				
 			end
 		
@@ -70,9 +70,6 @@ function addFiles(path)
 		end
 	]]
 		return checked
-	
-		
-	
 	end	
 	
 end
@@ -93,17 +90,17 @@ cmds={
 
 	geany.banner = "Geany Git assistant"
 
-	cmd="git --version"	--!! pokazuje ili output ili error
+	cmd="koko --version"	--!! pokazuje ili output ili error
 	handle = io.popen(cmd)
 	
 	result = handle:read("*a")
 	handle:close()
-	geany.message(result)
+	geany.message(" "..cmd.." :\n"..result.."")
 
 		if string.match(result,"git: command not found") then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ yum install git \nFedora:\n $ yum install git"
 			geany.message(install_msg)
-			return
+			return --izlazi iz skripte
 		end
 
 	--username=geany.input("username", "")
