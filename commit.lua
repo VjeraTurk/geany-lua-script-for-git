@@ -188,9 +188,9 @@ if result==''  then
 --Changes not staged for commit:
 	
 	--if string.match(result,"nothing added to commit but untracked files present") then
-	if string.match(result,"Changes not staged for commit") then
+	if string.match(result,"Changes not staged for commit") or string.match(result,"untracked files present") then
 	
-	geany.banner = "Untracked files present"
+	geany.banner = "Untracked files present or Changes not staged for commit"
 	choice = geany.confirm("Add untracked files to repository"  ,"Add untracked files to your repository?",true)
 
 		if choice == true then
