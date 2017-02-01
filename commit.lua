@@ -50,9 +50,9 @@ function addFiles(path)
 			if value == "1" then
 				
 				msg[i]="\n"..key
+				geany.message(msg[i])
 				i = i + 1 
-				geany.message(msg)
-				
+	
 				cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
 				geany.message(cmd)
 				
