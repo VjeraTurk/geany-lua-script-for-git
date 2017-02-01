@@ -147,22 +147,26 @@ if result==''  then
 			local dialog= dialog.new ("Add more files to commit", yes_no)
 
 			dialog.label(dialog, "Pick files to add")
-			
-			
---[[
-			local ch={}
 
 				for i,file in ipairs(files) do
-					dialog.checkbox ( dialog,"files", false, files[i])
+					dialog:checkbox(files[i], false,files[i])	
 				end
 
-			--ovdje
-	
-	]]
-			dialog.run(dialog)
+			local button, results = dialog:run()
 
-			geany.message(ch)
-
+			if results then
+				for key,value in pairs(results)
+					do					
+					if value == "1" then
+						cmd ="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..key.."  2>&1"
+						--geany.message(cmd)
+						handle = io.popen(cmd)
+						result = handle:read("*a")
+						handle:close()
+						--geany.message(result)
+					end			
+				end
+			end	
 		end
 
 	end
