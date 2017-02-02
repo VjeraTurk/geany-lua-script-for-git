@@ -114,6 +114,45 @@ function runCommand(cmd)
 end
 	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
 
+function logIn()
+
+	local yes_no = {"OK","Cancel"}
+	local dialogUser= dialog.new ("Unesi Username", yes_no)
+	local dialogEmail= dialog.new ("Unesi Email", yes_no)
+	dialog.label(dialogUser, "			Log In				")
+	dialog.text(dialogUser, "username", "xxxxxx", "Username" )
+	dialog.text(dialogEmail, "email", "", "Email" )
+	dialog.label(dialogEmail, "			Log In				")
+
+	local btU, resU = dialog.run(dialogUser)
+	local btnE, resE = dialog.run(dialogEmail)
+	
+	if resU then
+		for key,value in pairs(resU)
+			do
+			msg = "\n"..key..":\t"..value
+			geany.message(msg)			
+			name=value
+		end
+	end
+		
+	if resE then
+		for key,value in pairs(resE)
+			do
+			msg = "\n"..key..":\t"..value
+			geany.message(msg)			
+			email=value
+		end
+	end
+
+	cmd="cd "..FILE_DIR_PATH.."\ngit config user.name "..name.."\ngit config user.email "..email
+	
+	result=runCommand(cmd)
+	geany.message(" "..cmd.." :\n"..result.."")
+	
+
+end
+
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
 	["add_remote_origin"]="git add remote origin ",
@@ -125,6 +164,9 @@ cmds={
 	}
 --izmjena
 	geany.banner = "Geany Git assistant"
+	
+	
+	logIn()
 	
 	instaled=isInstaled("git")
 	if instaled== nil then return end
