@@ -148,12 +148,13 @@ cmds={
 
 			geany.banner = "Add remote origin"
 			choice = geany.confirm ( "Add remote origin", "This directory is only local. Link to web repository? (add origin)", true )
-			origin = geany.input("Please use public repository.", "https://")
 				
 				if choice == false then
 					geany.message("false")
 					end
 				if choice == true then
+					origin = geany.input("Please use public repository.", "https://")
+			
 					cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
 					handle = io.popen(cmd)
 					result = handle:read("*a")
