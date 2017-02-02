@@ -65,6 +65,14 @@ function addFiles(path)
 	
 end
 
+function runCommand(cmd)
+	
+	handle = io.popen(cmd)
+	result = handle:read("*a")
+	handle:close()
+	
+	return result
+end
 	local FILE_DIR_PATH = geany.dirname(geany.filename())
 	local files = scandir(FILE_DIR_PATH)
 	local conc=listvalues(files)
@@ -100,33 +108,30 @@ end
 		end
 	end
 
-function runCommand(cmd)
-	
-	handle = io.popen(cmd)
-	result = handle:read("*a")
-	handle:close()
-	
-	return result
-end
+
 --	cmd="{GIT} push --repo https://YOUR_USER_NAME:YOUR_PASSWORD@bitbucket.org/repo.git"
 	--Invalid username or password
-	
 --	cmd="cd "..FILE_DIR_PATH.."\ngit config user.name "..name.."\ngit config user.email "..email
-	
 	--result=runCommand(cmd)
 --	geany.message(" "..cmd.." :\n"..result.."")
 	
 	
-	cmd = "git config --get remote.origin.url"--makni 8 slova i dodaj @
+	cmd = "cd "..FILE_DIR_PATH.."\ngit config --get remote.origin.url\n"--makni 8 slova i dodaj @
 	result = runCommand(cmd)
+	geany.message(" "..cmd.." :\n"..result.."")
+	
+
+
+--	result="https://github.com/VjeraTurk/test"
 	resultOdrezani = string.sub(result, 9) --pocni od 9.og !
 -- cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
+	geany.message(resultOdrezani)
 	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
 	
 	
 	
 
-	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
+	--cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
 	result = runCommand(cmd)
 	geany.message(" "..cmd.." :\n"..result.."")
 
