@@ -126,7 +126,7 @@ cmds={
 	
 	geany.message(" "..cmd.." :\n"..result)
 	
-	r=IsInstaled("koko")
+	r=IsInstaled("git")
 --[[
 		if string.match(result,"not found") then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ apt-get install git \nFedora:\n $ yum install git"
