@@ -126,6 +126,22 @@ cmds={
 
 	geany.banner = "Geany Git assistant"
 	
+	
+	
+		local cmd="cd "..FILE_DIR_PATH.."\ngit push -u origin master"
+
+	cmd= "git push -u origin master" -- && echo "..name.." && echo "..psw.."\n"
+	
+	cmd= "cd "..FILE_DIR_PATH.."\ngit koko" -- && echo "..name.." && echo "..psw.."\n"
+	
+	cmd="Kate"
+	handle = io.popen(cmd)
+	result = handle:read("*a")
+	handle:close()
+	geany.message(" "..cmd.." :\n"..result.."")
+
+	
+	
 	instaled=isInstaled("git")
 	if instaled== nil then return end
 
