@@ -219,14 +219,13 @@ if result==''  then
 			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
 			runCommand(cmd)
 		end
+	
 	--Changes not staged for commit or untracked files present
-	--if string.match(result,"nothing added to commit but untracked files present") then
 	
 	if string.match(result,"Changes not staged for commit") or string.match(result,"untracked files present") then
-	--izmjena
-	--izmjena
-	geany.banner = "Untracked files present or changes not staged for commit"
-	choice = geany.confirm("		Add untracked or modified files to repository		"  ,"	Add untracked files to your repository?",true)
+	
+		geany.banner = "Untracked files present or changes not staged for commit"
+		choice = geany.confirm("		Add untracked or modified files to repository		"  ,"	Add untracked files to your repository?",true)
 
 		if choice == true then
 			
