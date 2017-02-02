@@ -232,16 +232,8 @@ if result==''  then
 					message=geany.input("Commit message", "Added files: "..list)
 
 					if message ~= nil then
-						cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
-					else
-						cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
+						runCommand("cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\"")
 					end
-
-					handle = io.popen(cmd)
-					result = handle:read("*a")
-					handle:close()
-
-					geany.message(" "..cmd.." :\n"..result.."")
 				end
 		end
 
