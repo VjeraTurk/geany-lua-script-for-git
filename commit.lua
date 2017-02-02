@@ -218,18 +218,9 @@ if result==''  then
 		
 		if message ~= nil then
 			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
-		else
-			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
+			runCommand(cmd)
 		end
-
-		handle = io.popen(cmd)
-		result = handle:read("*a")
-		handle:close()
-
-		geany.message(" "..cmd.." :\n"..result.."")
-		
 	--Changes not staged for commit or untracked files present
-	
 	--if string.match(result,"nothing added to commit but untracked files present") then
 	
 	if string.match(result,"Changes not staged for commit") or string.match(result,"untracked files present") then
