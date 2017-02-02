@@ -5,6 +5,7 @@
 	--ne radi provjera koko --version, nastavlja s komitom
 	--	geany.banner = "Commit your changes"
 		message=geany.input("Commit message", "no comment")
+		--git clone
 		
 		prozor ima Ok i Cancel (i x) ali izvrši commit bez obzira, nema provjere sta je odabrano -> napraviti dialog ili geany confirm
 	-- dva dialoga za redom ne rade! Greška na new u drugom
@@ -102,17 +103,17 @@ cmds={
 	result = handle:read("*a")
 	handle:close()
 	
-	--geany.message(" "..cmd.." :\n"..result)
+	geany.message(" "..cmd.." :\n"..result)
 
 		if string.match(result,"not found") then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ apt-get install git \nFedora:\n $ yum install git"
 			geany.message(install_msg)
-			return --izlazi iz skripte (ne radi ?!)
+			return --izlazi iz skripte
 		end
 		
 	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
 
-	cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
+	cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 	--!! 2>&1 pokazuje ili output ili error
 	--!! ako ulancavamo 2 komande, između stavljamo \n
 
@@ -121,33 +122,34 @@ cmds={
 	handle:close()
 	--geany.message(""..cmd.." :\n"..result.."")
 
-if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
+	if string.match(result,"fatal: Not a git repository (or any of the parent directories): .git") then 
+--	result=="fatal: Not a git repository (or any of the parent directories): .git\n" --!! obavezno \n, u suprotnom ne radi
+		geany.banner = "Not a git repository"
+		
+		local choice = geany.confirm ( "Your file could not be commited", "This directory is not a git repository (or any of the parent directories. Init new repository?", true )
 
-	geany.banner = "Not a git repository"
-	local choice = geany.confirm ( "Your file could not be commited", "This directory is not a git repository (or any of the parent directories. Init new repository?", true )
+		if choice==true then
+			--git init
+			geany.banner = "Init new repository"
+			cmd = "git init "..FILE_DIR_PATH.."  2>&1"	--!! pokazuje ili output ili error
+			handle = io.popen(cmd)
+			result = handle:read("*a")
+			handle:close()
+			geany.message(result)
+			
+			--git add
+			cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 
-	if choice==true then
+			handle = io.popen(cmd)
+			result = handle:read("*a")
+			handle:close()
 
-		geany.banner = "Init new repository or clone existing one"
-		cmd="git init "..FILE_DIR_PATH.."  2>&1"	--!! pokazuje ili output ili error
-		handle = io.popen(cmd)
-		result = handle:read("*a")
-		handle:close()
-		geany.message(result)
-
-		cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
-		--!! 2>&1 pokazuje ili output ili error
-		--!! ako ulancavamo 2 komande, između stavljamo \n
-
-		handle = io.popen(cmd)
-		result = handle:read("*a")
-		handle:close()
-
-		result=''
+			result=''
 
 			geany.banner = "Add remote origin"
 			choice = geany.confirm ( "Add remote origin", "This directory is only local. Link to web repository? (add origin)", true )
-			origin=geany.input("Please use public repository.", "https://")
+			origin = geany.input("Please use public repository.", "https://")
+				
 				if choice == true then
 					cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
 					handle = io.popen(cmd)
@@ -155,23 +157,15 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 					handle:close()
 
 					if result=='' then
-					--geany.message(" "..cmd.." :\n"..result.."")
-
-					--handle = 
-					os.execute(string.format('xdg-open "%s"', origin))
-					--handle:close()
-					geany.message("Hurray!", "Repositories are now linked. Each time you push your code it will be saved on your remote origin. ")
-
+						--geany.message(" "..cmd.." :\n"..result.."")
+						geany.message("Hurray!", "Repositories are now linked. Each time you push your code it will be saved on your remote origin. ")
+						os.execute(string.format('xdg-open "%s"', origin))
+						--handle:close()
 					end
 				end
-		--psw=geany.input("password", "")
-
-	elseif choice==false then
-	elseif choice==nil then
+		end
 
 	end
-
-end
 
 if result==''  then
 	
