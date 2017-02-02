@@ -79,8 +79,21 @@ end
 	dialog.label(dialogPass, "							Push							")
 	dialog.password (dialogPass, "Drugi argument", "xxxxxx", "Lozinka" )
 	
-	local name = dialog.run(dialogUser)
-	local psw = dialog.run(dialogPass)
+	local btU, resU = dialog.run(dialogUser)
+	local btnP, resP = dialog.run(dialogPass)
+	
+
+	if resU then
+
+	for key,value in pairs(resU)
+		do
+		msg="\n"..key..":\t"..value
+		if value == "1" then
+			geany.message(msg)			
+		end
+	
+	end
+	
 	
 	cmd= "git push -u origin master\n"..name.."\n"..psw.."\n"
 	handle = io.popen(cmd)
