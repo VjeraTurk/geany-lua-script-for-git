@@ -313,7 +313,11 @@ if result==''  then
 
 	end
 	
-	pushToOrigin()
+	local choice = geany.confirm ( "Push changes to remote origin", "Do you want to push changes to remote origin?", true )
+
+	if choice then pushToOrigin()
+	end
+	
 end
 
 --prije git comande, cd komanda u direktorij filea
