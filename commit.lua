@@ -2,8 +2,6 @@
 	Opis
 
 	--Velicinu prozora mijenjam s tabovima unutar imena
-	--ne radi provjera koko --version, nastavlja s komitom
-	--	geany.banner = "Commit your changes"
 		message=geany.input("Commit message", "no comment")
 		--git clone
 		
@@ -165,8 +163,8 @@ function pushToOrigin()
 	if resU then
 		for key,value in pairs(resU)
 			do
-			msg = "\n"..key..":\t"..value
-			geany.message(msg)			
+			--msg = "\n"..key..":\t"..value
+			--geany.message(msg)			
 			name=value
 		end
 	end
@@ -174,8 +172,8 @@ function pushToOrigin()
 	if resP then
 		for key,value in pairs(resP)
 			do
-			msg="\n"..key..":\t"..value
-			geany.message(msg)			
+			--msg="\n"..key..":\t"..value
+			--geany.message(msg)			
 			psw=value
 		end
 	end
@@ -186,8 +184,6 @@ function pushToOrigin()
 	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
 	result = runCommand(cmd)
 	geany.message(" "..cmd.." :\n"..result.."")
-
-
 end
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
