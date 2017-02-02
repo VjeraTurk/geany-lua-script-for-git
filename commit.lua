@@ -27,6 +27,8 @@ function scandir(directory)
     pfile:close()
     return t
 end
+
+
 --spoji vrijednosti u tablici u  dugacak string
 function listvalues(s)
     local t = { }
@@ -82,6 +84,25 @@ function addFiles(path)
 	
 end
 
+function IsInstaled(program)
+
+	local cmd = ""..program.." --version 2>&1"	--!! pokazuje ili output ili error
+	handle = io.popen(cmd)
+	result = handle:read("*a")
+	--handle:close()
+	
+	geany.message(" "..cmd.." :\n"..result)
+
+		if string.match(result,"not found") then
+			install_msg="Before you start using "..program..", you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ apt-get install "..program.." \nFedora:\n $ yum install "..program..""
+			geany.message(install_msg)
+			return nil
+		else return 1
+		
+		end
+		
+end
+
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
 	["add_remote_origin"]="git add remote origin ",
@@ -104,13 +125,15 @@ cmds={
 	handle:close()
 	
 	geany.message(" "..cmd.." :\n"..result)
-
+	
+	r=IsInstaled("koko")
+--[[
 		if string.match(result,"not found") then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ apt-get install git \nFedora:\n $ yum install git"
 			geany.message(install_msg)
 			return --izlazi iz skripte
 		end
-		
+	]]	
 	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
 
 	cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
@@ -144,17 +167,14 @@ cmds={
 			result = handle:read("*a")
 			handle:close()
 
+
 			result=''
 
 			geany.banner = "Add remote origin"
 			choice = geany.confirm ( "Add remote origin", "This directory is only local. Link to web repository? (add origin)", true )
 				
-				if choice == false then
-					geany.message("false")
-					end
 				if choice == true then
 					origin = geany.input("Please use public repository.", "https://")
-			
 					cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
 					handle = io.popen(cmd)
 					result = handle:read("*a")
