@@ -73,17 +73,14 @@ end
 	local yes_no = {"OK","Cancel"}
 	local dialogUser= dialog.new ("Unesi Username", yes_no)
 	local dialogPass= dialog.new ("Unesi Password", yes_no)
-	local dialogEmail= dialog.new ("Unesi Email", yes_no)
 	--dialog.label(dialog, "Pick files to add")
 	dialog.label(dialogUser, "							Push						")
 	dialog.text(dialogUser, "username", "xxxxxx", "Username" )
-	dialog.text(dialogEmail, "email", "", "Email" )
 	dialog.label(dialogPass, "							Push						")
 	dialog.password (dialogPass, "password", "xxxxxx", "Password" )
 	
 	local btU, resU = dialog.run(dialogUser)
 	local btnP, resP = dialog.run(dialogPass)
-	local btnE, resE = dialog.run(dialogEmail)
 	
 	if resU then
 		for key,value in pairs(resU)
@@ -93,19 +90,7 @@ end
 			name=value
 		end
 	end
-
-
 	
-	
-	if resE then
-		for key,value in pairs(resE)
-			do
-			msg = "\n"..key..":\t"..value
-			geany.message(msg)			
-			email=value
-		end
-	end
-
 	if resP then
 		for key,value in pairs(resP)
 			do
