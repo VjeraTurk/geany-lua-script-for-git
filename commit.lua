@@ -215,7 +215,6 @@ if result==''  then
 	geany.banner = "Commit your changes"
 	message = geany.input("Commit message", "no comment")
 	
-		
 		if message ~= nil then
 			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
 			runCommand(cmd)
