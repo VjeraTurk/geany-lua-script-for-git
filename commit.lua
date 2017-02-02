@@ -1,12 +1,13 @@
 --[[
 	Opis
 
-	--Velicinu prozora mijenjam s tabovima unutar imena
-		message=geany.input("Commit message", "no comment")
-		--git clone
-		
+	cmds
+	--"git add remote origin "
+	--"git commit -m "
+	--"git config user.name ",--"Your Name Here"
+	--"git config user.email ",--"your@email.com"
+
 		prozor ima Ok i Cancel (i x) ali izvrši commit bez obzira, nema provjere sta je odabrano -> napraviti dialog ili geany confirm
-	-- dva dialoga za redom ne rade! Greška na new u drugom
 	]]
 
 	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
@@ -26,8 +27,7 @@ function scandir(directory)
     return t
 end
 
-
---spoji vrijednosti u tablici u  dugacak string
+-- spoji vrijednosti u tablici u dugacak string s /t između
 function listvalues(s)
     local t = { }
     for k,v in ipairs(s) do
@@ -35,7 +35,8 @@ function listvalues(s)
     end
     return table.concat(t,'\t')
 end
---ispisuje checkboxove svih fileova u folderu čiji path primi, radi git add na odabranima 
+
+-- ispisuje checkboxove svih fileova u folderu čiji path primi, radi git add na odabranima 
 function addFiles(path)
 
 	local files = scandir(path)
@@ -50,23 +51,22 @@ function addFiles(path)
 	local button, results = dialog:run()
 	local checked={}
 	local i = 1
---izmjena
+
 	if results then
 
 		for key,value in pairs(results)
 			do
-		--	msg="\n"..key..":\t"..value
 			if value == "1" then
 				checked[i]=key
 				i=i+1
-				--geany.message(msg)
-				
 				cmd ="cd "..path.."  2>&1\ngit add "..key.."  2>&1"
 				
-				handle = io.popen(cmd)
-				result = handle:read("*a")
-				handle:close()
-				geany.message(" "..cmd.." :\n"..result.."")
+				result=runCommand(cmd)
+				
+				--handle = io.popen(cmd)
+				--result = handle:read("*a")
+				--handle:close()
+				--geany.message(" "..cmd.." :\n"..result.."")
 				
 			end
 		
@@ -107,6 +107,7 @@ function runCommand(cmd)
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
+	geany.message(" "..cmd.." :\n"..result.."")
 	
 	return result
 end
@@ -177,22 +178,7 @@ function pushToOrigin()
 			psw=value
 		end
 	end
---[[
---	cmd = "git config --get remote.origin.url"--makni 8 slova i dodaj @
---	result = runCommand(cmd)
-
-	cmd = "git config --get remote.origin.url"--makni 8 slova i dodaj @
-	result = runCommand(cmd)
-	resultOdrezani = string.sub(result, 9) --pocni od 9.og !
--- cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
-	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
-	--cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
-	result = runCommand(cmd)
-	geany.message(" "..cmd.." :\n"..result.."")
 	
-]]	
-	
-		
 	cmd = "cd "..FILE_DIR_PATH.."\ngit config --get remote.origin.url\n"--makni 8 slova i dodaj @
 	result = runCommand(cmd)
 	geany.message(" "..cmd.." :\n"..result.."")
@@ -206,13 +192,6 @@ function pushToOrigin()
 	
 end
 cmds={
-	--["force_local_users"]="git config --global user.useConfigOnly true",
-	["add_remote_origin"]="git add remote origin ",
---  ["clone"]="git clone", --gitlab Public The project can be cloned without any authentication.
-	["commit"]="git commit -m ",
---  ["config_name"]="git config user.name ",--"Your Name Here"
-	["config_email"]="git config user.email ",--"your@email.com"
---	["install"]="apt-get install git"
 	}
 --izmjena
 	geany.banner = "Geany Git assistant"
