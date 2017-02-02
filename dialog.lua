@@ -68,31 +68,27 @@ end
 	local FILE_DIR_PATH = geany.dirname(geany.filename())
 	local files = scandir(FILE_DIR_PATH)
 	local conc=listvalues(files)
---	geany.message(conc)
---	addFiles(FILE_DIR_PATH)
 
 
-	local yes_no = {"Push","Cancel"}	
-	local dialog= dialog.new ("Push", yes_no)
+	local yes_no = {"OK","Cancel"}
+	local dialogUser= dialog.new ("				Push							", yes_no)
+	local dialogPass= dialog.new ("				Push							", yes_no)
+	--dialog.label(dialog, "Pick files to add")
+	dialog.label(dialogUser, "				Push							")
+	dialog.text(dialogUser, "Drugi argument", "", "Username" )
+	dialog.label(dialogPass, "				Push							")
+	dialog.password (dialog, "Drugi argument", "", "Password" )
 	
-	dialog.label(dialog, "							Push							")
-	dialog:heading("Credentials on your remote origin site (github/gitlab/bitbucket):")
-	dialog:text("name", "VjeraTurk","Username:")
-	dialog:password("pass", nil,  "Password:")
+	local name = dialog.run(dialogUser)
+	local psw = dialog.run(dialogPass)
 	
-	button, results = dialog:run(dialog)
+	cmd= ""..name--.."\n"..psw
+	handle = io.popen(cmd)
+	result = handle:read("*a")
+	handle:close()
+	geany.message(" "..cmd.." :\n"..result.."")
 
-	local btn = {"Commit","Cancel","Add more files"}
-	local dlgc = dialog.new("Commit your changes", btn) 
-	dlgc:label("-----Push------")
-	dlgc:text("msg", "no comment","Commit message:")
-	
-	-- Show the dialog
-	local button, results = dlgc:run(dlgc)
-	
-	message=results[msg]
-	geany.message(message)
-	
+	--[[
 	if message ~= nil then
 		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
 	else
@@ -104,4 +100,4 @@ end
 	handle:close()
 
 	geany.message(" "..cmd.." :\n"..result.."")
-	
+	]]

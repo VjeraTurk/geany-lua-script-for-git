@@ -7,9 +7,8 @@ local dialogPass= dialog.new ("Unesi Password", yes_no)
 	local name = dialog.run(dialogUser)
 	local psw = dialog.run(dialogPass)
 	
-	cmd= ""..name.."\n"..psw
+	cmd= ""..name--.."\n"..psw
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
-	
-	geany.message(result)
+	geany.message(" "..cmd.." :\n"..result.."")
