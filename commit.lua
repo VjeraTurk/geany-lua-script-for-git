@@ -226,7 +226,7 @@ cmds={
 if result==''  then
 	
 	geany.banner = "Commit your changes"
-	
+	geany.confirm("Loop completed...", "Repeat the demo?", true)
 	message = geany.input("Commit message", "no comment")
 	
 	if message ~= nil then
