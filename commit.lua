@@ -132,31 +132,16 @@ cmds={
 	
 	instaled=isInstaled("git")
 	if instaled== nil then return end
-	
---[[
-	local cmd="git --version 2>&1"	--!! pokazuje ili output ili error
-	handle = io.popen(cmd)
-	result = handle:read("*a")
-	handle:close()
-	
-	geany.message(" "..cmd.." :\n"..result)
-	
-		if string.match(result,"not found") then
-			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ apt-get install git \nFedora:\n $ yum install git"
-			geany.message(install_msg)
-			return --izlazi iz skripte
-		end
-]]	
 
 	cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 	--!! 2>&1 pokazuje ili output ili error
 	--!! ako ulancavamo 2 komande, između stavljamo \n
-
---	handle = io.popen(cmd)
+	
+	--	handle = io.popen(cmd)
 	--result = handle:read("*a")
 	--handle:close()
 	--geany.message(""..cmd.." :\n"..result.."")
-	result=runCommand(cmd)
+	result = runCommand(cmd)
 
 	if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
 		geany.banner = "Not a git repository"
