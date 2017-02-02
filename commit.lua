@@ -177,7 +177,7 @@ function pushToOrigin()
 			psw=value
 		end
 	end
-
+--[[
 --	cmd = "git config --get remote.origin.url"--makni 8 slova i dodaj @
 --	result = runCommand(cmd)
 
@@ -189,6 +189,21 @@ function pushToOrigin()
 	--cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
 	result = runCommand(cmd)
 	geany.message(" "..cmd.." :\n"..result.."")
+	
+]]	
+	
+		
+	cmd = "cd "..FILE_DIR_PATH.."\ngit config --get remote.origin.url\n"--makni 8 slova i dodaj @
+	result = runCommand(cmd)
+	geany.message(" "..cmd.." :\n"..result.."")
+	resultOdrezani = string.sub(result, 9) --pocni od 9.og !
+	geany.message(resultOdrezani)
+	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
+	result = runCommand(cmd)
+	geany.message(" "..cmd.." :\n"..result.."")
+
+	
+	
 end
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
