@@ -285,6 +285,7 @@ if result==''  then
 	
 	if string.match(result,"Changes not staged for commit") or string.match(result,"untracked files present") then
 	--izmjena
+	--izmjena
 	geany.banner = "Untracked files present or changes not staged for commit"
 	choice = geany.confirm("		Add untracked or modified files to repository		"  ,"	Add untracked files to your repository?",true)
 
