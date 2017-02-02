@@ -52,7 +52,7 @@ function addFiles(path)
 	local button, results = dialog:run()
 	local checked={}
 	local i = 1
-
+--izmjena
 	if results then
 
 		for key,value in pairs(results)
@@ -122,10 +122,6 @@ cmds={
 --  ["config_name"]="git config user.name ",--"Your Name Here"
 	["config_email"]="git config user.email ",--"your@email.com"
 --	["install"]="apt-get install git"
-	}
-
-	flags={
-	["upsteream"]=" -u "
 	}
 
 	geany.banner = "Geany Git assistant"
