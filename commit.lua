@@ -158,8 +158,9 @@ if result=="fatal: Not a git repository (or any of the parent directories): .git
 					if result=='' then
 					--geany.message(" "..cmd.." :\n"..result.."")
 
-					handel=os.execute(string.format('xdg-open "%s"', origin))
-					handle:close()
+					--handle = 
+					os.execute(string.format('xdg-open "%s"', origin))
+					--handle:close()
 					geany.message("Hurray!", "Repositories are now linked. Each time you push your code it will be saved on your remote origin. ")
 
 					end
@@ -196,7 +197,7 @@ if result==''  then
 	
 	if string.match(result,"Changes not staged for commit") or string.match(result,"untracked files present") then
 	
-	geany.banner = "Untracked files present or Changes not staged for commit"
+	geany.banner = "Untracked files present or changes not staged for commit"
 	choice = geany.confirm("		Add untracked or modified files to repository		"  ,"	Add untracked files to your repository?",true)
 
 		if choice == true then
