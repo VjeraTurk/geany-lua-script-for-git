@@ -122,13 +122,13 @@ cmds={
 	handle:close()
 	--geany.message(""..cmd.." :\n"..result.."")
 
-	if string.match(result,"fatal: Not a git repository (or any of the parent directories): .git") then 
---	result=="fatal: Not a git repository (or any of the parent directories): .git\n" --!! obavezno \n, u suprotnom ne radi
+--	if --string.match(result,"fatal: Not a git repository (or any of the parent directories): .git") then 
+	if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
 		geany.banner = "Not a git repository"
 		
 		local choice = geany.confirm ( "Your file could not be commited", "This directory is not a git repository (or any of the parent directories. Init new repository?", true )
 
-		if choice==true then
+		if choice == true then
 			--git init
 			geany.banner = "Init new repository"
 			cmd = "git init "..FILE_DIR_PATH.."  2>&1"	--!! pokazuje ili output ili error
@@ -150,6 +150,9 @@ cmds={
 			choice = geany.confirm ( "Add remote origin", "This directory is only local. Link to web repository? (add origin)", true )
 			origin = geany.input("Please use public repository.", "https://")
 				
+				if choice == false then
+					geany.message("false")
+					end
 				if choice == true then
 					cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
 					handle = io.popen(cmd)
