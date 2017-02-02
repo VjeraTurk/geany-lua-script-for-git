@@ -115,7 +115,7 @@ end
 	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
 
 function logIn()
-
+	--maknuti gumbe, oni us bzvez (samo ok?)
 	local yes_no = {"OK","Cancel"}
 	local dialogUser = dialog.new ("		Log In				", yes_no)
 	local dialogEmail = dialog.new("		Log In				", yes_no)
@@ -134,7 +134,6 @@ function logIn()
 
 	local btnE, resE = dialog.run(dialogEmail)
 	
-		
 	if resE then
 		for key,value in pairs(resE)
 			do
@@ -164,10 +163,8 @@ cmds={
 --izmjena
 	geany.banner = "Geany Git assistant"
 	
-	
-	
 	instaled=isInstaled("git")
-	if instaled== nil then return end
+	if instaled == nil then return end
 
 	cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 	--!! 2>&1 pokazuje ili output ili error
@@ -195,7 +192,6 @@ cmds={
 			
 			--git config user.name git config user.email
 			logIn()
-	
 			--git add
 			cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 
