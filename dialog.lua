@@ -75,32 +75,57 @@ end
 	local dialogPass= dialog.new ("Unesi Password", yes_no)
 	--dialog.label(dialog, "Pick files to add")
 	dialog.label(dialogUser, "							Push							")
-	dialog.text(dialogUser, "Drugi argument", "xxxxxx", "Username" )
+	dialog.text(dialogUser, "username", "xxxxxx", "Username" )
 	dialog.label(dialogPass, "							Push							")
-	dialog.password (dialogPass, "Drugi argument", "xxxxxx", "Lozinka" )
+	dialog.password (dialogPass, "password", "xxxxxx", "Password" )
 	
 	local btU, resU = dialog.run(dialogUser)
 	local btnP, resP = dialog.run(dialogPass)
 	
-
 	if resU then
-
-	for key,value in pairs(resU)
-		do
-		msg="\n"..key..":\t"..value
-		if value == "1" then
-			geany.message(msg)			
+	
+		for key,value in pairs(resU)
+			do
+			msg="\n"..key..":\t"..value
+			--geany.message(msg)			
+			name=value
 		end
-	
 	end
+
+	if resP then
+		for key,value in pairs(resP)
+			do
+			msg="\n"..key..":\t"..value
+			--geany.message(msg)			
+			psw=value
+		end
+	end
+--[[	
+	cmd= "cd "..FILE_DIR_PATH.."\ngit push -u origin master 2>&1"--..name.." 2>&1" -- && echo "..name.." && echo "..psw.."\n"
+	cmd2="cd "..FILE_DIR_PATH.."\n"..name.."2>&1"
 	
+	handle = io.popen(cmd)
+	handle2 = io.popen(cmd2)
 	
-	cmd= "git push -u origin master\n"..name.."\n"..psw.."\n"
+	result = handle:read("*a")
+	result2 = handle2:read("*a")
+	
+	handle:close()
+	geany.message(" "..cmd.." :\n"..result.."")
+	geany.message(" "..cmd2.." :\n"..result2.."")
+]]
+function runCommand(cmd)
+	
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
+	
+	return result
+end
+--	cmd="{GIT} push --repo https://YOUR_USER_NAME:YOUR_PASSWORD@bitbucket.org/repo.git"
+	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://VjeraTurk:schweppes6@github.com/VjeraTurk/test 2>&1"
+	result = runCommand(cmd)
 	geany.message(" "..cmd.." :\n"..result.."")
-
 	--[[
 	if message ~= nil then
 		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""

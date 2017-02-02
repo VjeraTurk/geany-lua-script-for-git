@@ -127,19 +127,11 @@ cmds={
 	geany.banner = "Geany Git assistant"
 	
 	
-	
-		local cmd="cd "..FILE_DIR_PATH.."\ngit push -u origin master"
-
-	--cmd= "git push -u origin master" -- && echo "..name.." && echo "..psw.."\n"
-	
-	--cmd= "cd "..FILE_DIR_PATH.."\ngit koko" -- && echo "..name.." && echo "..psw.."\n"
-	
-	--cmd="Kate"
+	cmd="kokodak"
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
-	geany.message(" "..cmd.." :\n"..result.."")
-
+	geany.message(""..cmd.." :\n"..result.."")
 	
 	
 	instaled=isInstaled("git")
@@ -149,12 +141,8 @@ cmds={
 	--!! 2>&1 pokazuje ili output ili error
 	--!! ako ulancavamo 2 komande, između stavljamo \n
 	
-	--	handle = io.popen(cmd)
-	--result = handle:read("*a")
-	--handle:close()
-	--geany.message(""..cmd.." :\n"..result.."")
-	result = runCommand(cmd)
-
+	
+	
 	if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
 		geany.banner = "Not a git repository"
 		
