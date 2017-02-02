@@ -123,7 +123,7 @@ cmds={
 	["config_email"]="git config user.email ",--"your@email.com"
 --	["install"]="apt-get install git"
 	}
-
+--izmjena
 	geany.banner = "Geany Git assistant"
 	
 	instaled=isInstaled("git")
