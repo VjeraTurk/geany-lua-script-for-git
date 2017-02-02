@@ -97,7 +97,7 @@ cmds={
 
 	geany.banner = "Geany Git assistant"
 
-	cmd="koko --version"	--!! pokazuje ili output ili error
+	local cmd="koko --version"	--!! pokazuje ili output ili error
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
@@ -112,7 +112,7 @@ cmds={
 		
 	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
 
-	local cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
+	cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 	--!! 2>&1 pokazuje ili output ili error
 	--!! ako ulancavamo 2 komande, između stavljamo \n
 
