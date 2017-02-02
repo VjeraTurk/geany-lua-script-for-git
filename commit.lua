@@ -136,19 +136,13 @@ function pushToOrigin()
 	local btnP, resP = dialog.run(dialogPass)
 	
 	if resU then
-		for key,value in pairs(resU)
-			do
-			--msg = "\n"..key..":\t"..value
-			--geany.message(msg)			
+		for key,value in pairs(resU) do	
 			name=value
 		end
 	end
 	
 	if resP then
-		for key,value in pairs(resP)
-			do
-			--msg="\n"..key..":\t"..value
-			--geany.message(msg)			
+		for key,value in pairs(resP) do
 			psw=value
 		end
 	end
