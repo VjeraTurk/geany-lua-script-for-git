@@ -264,7 +264,7 @@ cmds={
 if result==''  then
 	
 	geany.banner = "Commit your changes"
-	local button, message = geany.input("Commit message", "no comment")
+	message = geany.input("Commit message", "no comment")
 	
 		
 		if message ~= nil then
@@ -300,7 +300,7 @@ if result==''  then
 					if message ~= nil then
 						cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
 					else
-						--cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
+						cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
 					end
 
 					handle = io.popen(cmd)
