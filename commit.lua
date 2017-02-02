@@ -217,7 +217,7 @@ if result==''  then
 	
 		if message ~= nil then
 			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
-			runCommand(cmd)
+			result=runCommand(cmd)
 		end
 	
 	--Changes not staged for commit or untracked files present
