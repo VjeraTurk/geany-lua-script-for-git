@@ -71,18 +71,18 @@ end
 
 
 	local yes_no = {"OK","Cancel"}
-	local dialogUser= dialog.new ("				Push							", yes_no)
-	local dialogPass= dialog.new ("				Push							", yes_no)
+	local dialogUser= dialog.new ("Unesi Username", yes_no)
+	local dialogPass= dialog.new ("Unesi Password", yes_no)
 	--dialog.label(dialog, "Pick files to add")
-	dialog.label(dialogUser, "				Push							")
-	dialog.text(dialogUser, "Drugi argument", "", "Username" )
-	dialog.label(dialogPass, "				Push							")
-	dialog.password (dialog, "Drugi argument", "", "Password" )
+	dialog.label(dialogUser, "							Push							")
+	dialog.text(dialogUser, "Drugi argument", "xxxxxx", "Username" )
+	dialog.label(dialogPass, "							Push							")
+	dialog.password (dialogPass, "Drugi argument", "xxxxxx", "Lozinka" )
 	
 	local name = dialog.run(dialogUser)
 	local psw = dialog.run(dialogPass)
 	
-	cmd= ""..name--.."\n"..psw
+	cmd= "git push -u origin master\n"..name.."\n"..psw.."\n"
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
