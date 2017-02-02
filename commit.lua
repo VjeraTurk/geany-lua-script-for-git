@@ -1,7 +1,12 @@
 --[[
 	Opis
 
-	cmds
+	cmds:
+	
+	-- 2>&1 pokazuje ili output ili error
+	-- ako ulancavamo 2 komande, između stavljamo \n ili |
+	
+	
 	--"git add remote origin "
 	--"git commit -m "
 	--"git config user.name ",--"Your Name Here"
@@ -153,51 +158,37 @@ function pushToOrigin()
 end
 
 
-local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
+local FILE_PATH = geany.filename() -- geany.filename() cijeli path, ne samo ime!
 local FILE_DIR_PATH = geany.dirname(geany.filename())
 local FILE_NAME = geany.basename(geany.filename())
 
-
 	geany.banner = "Geany Git assistant"
 	
-	instaled=isInstaled("git")
+	instaled = isInstaled("git")
 	if instaled == nil then return end
 
-	local cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
-	
-	-- 2>&1 pokazuje ili output ili error
-	-- ako ulancavamo 2 komande, između stavljamo \n ili |
-	
+	local cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"	
 	local result = runCommand(cmd)
---	handle = io.popen(cmd)
-	--result = handle:read("*a")
-	--handle:close()
-	--geany.message(""..cmd.." :\n"..result.."")
 	
-	
-	if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
+	--if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
+	if  string.match(result,"Not a git repository") then	
 		geany.banner = "Not a git repository"
 		
 		local choice = geany.confirm ( "Your file could not be commited", "This directory is not a git repository (or any of the parent directories. Init new repository?", true )
 
 		if choice == true then
+			
 			--git init
 			geany.banner = "Init new repository"
 			cmd = "git init "..FILE_DIR_PATH.."  2>&1"	--!! pokazuje ili output ili error
-			handle = io.popen(cmd)
-			result = handle:read("*a")
-			handle:close()
-			geany.message(result)
+			result = runCommand(cmd)
 			
 			--git config user.name git config user.email
 			logIn()
+
 			--git add
 			cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
-
-			handle = io.popen(cmd)
-			result = handle:read("*a")
-			handle:close()
-
+			result = runCommand(cmd)
 
 			result=''
 
@@ -205,18 +196,15 @@ local FILE_NAME = geany.basename(geany.filename())
 			choice = geany.confirm ( "Add remote origin", "This directory is only local. Link to web repository? (add origin)", true )
 				
 				if choice == true then
+					
 					origin = geany.input("Please use public repository.", "https://")
-					cmd="cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
-					handle = io.popen(cmd)
-					result = handle:read("*a")
-					handle:close()
-
+					cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit remote add origin "..origin.." "
+					result = runCommand(cmd)
 					if result=='' then
-						--geany.message(" "..cmd.." :\n"..result.."")
 						geany.message("Hurray!", "Repositories are now linked. Each time you push your code it will be saved on your remote origin. ")
 						os.execute(string.format('xdg-open "%s"', origin))
-						--handle:close()
 					end
+					
 				end
 		end
 
