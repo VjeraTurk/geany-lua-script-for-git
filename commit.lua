@@ -84,7 +84,7 @@ function addFiles(path)
 	
 end
 
-function IsInstaled(program)
+function isInstaled(program)
 
 	local cmd = ""..program.." --version 2>&1"	--!! pokazuje ili output ili error
 	handle = io.popen(cmd)
@@ -104,6 +104,16 @@ function IsInstaled(program)
 		
 end
 
+function runCommand(cmd)
+	
+	handle = io.popen(cmd)
+	result = handle:read("*a")
+	handle:close()
+	
+	return result
+end
+	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
+
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
 	["add_remote_origin"]="git add remote origin ",
@@ -119,35 +129,35 @@ cmds={
 	}
 
 	geany.banner = "Geany Git assistant"
-
+	
+	instaled=isInstaled("git")
+	if instaled== nil then return end
+	
+--[[
 	local cmd="git --version 2>&1"	--!! pokazuje ili output ili error
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
 	
 	geany.message(" "..cmd.." :\n"..result)
-
-	instaled=IsInstaled("git")
-	if instaled== nil then return end
---[[
+	
 		if string.match(result,"not found") then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ apt-get install git \nFedora:\n $ yum install git"
 			geany.message(install_msg)
 			return --izlazi iz skripte
 		end
-	]]	
-	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
+]]	
 
 	cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 	--!! 2>&1 pokazuje ili output ili error
 	--!! ako ulancavamo 2 komande, između stavljamo \n
 
-	handle = io.popen(cmd)
-	result = handle:read("*a")
-	handle:close()
+--	handle = io.popen(cmd)
+	--result = handle:read("*a")
+	--handle:close()
 	--geany.message(""..cmd.." :\n"..result.."")
+	result=runCommand(cmd)
 
---	if --string.match(result,"fatal: Not a git repository (or any of the parent directories): .git") then 
 	if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
 		geany.banner = "Not a git repository"
 		
