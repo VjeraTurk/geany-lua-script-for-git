@@ -10,10 +10,6 @@
 		prozor ima Ok i Cancel (i x) ali izvrši commit bez obzira, nema provjere sta je odabrano -> napraviti dialog ili geany confirm
 	]]
 
-local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
-local FILE_DIR_PATH = geany.dirname(geany.filename())
-local FILE_NAME = geany.basename(geany.filename())
-
 --izvrsava komandu
 function runCommand(cmd)
 	
@@ -95,9 +91,9 @@ function addFiles(path)
 	
 end
 
-
+-- nakon inicijalizacije dodaje ime pod kojim se izvršava svako commitanje (zapise u config tog repozitorija
 function logIn()
-	--maknuti gumbe, oni us bzvez (samo ok?)
+
 	local yes_no = {"OK","Cancel"}
 	local dialogUser = dialog.new ("		Log In				", yes_no)
 	local dialogEmail = dialog.new("		Log In				", yes_no)
@@ -108,7 +104,6 @@ function logIn()
 		for key,value in pairs(resU) do			
 			name=value
 		end
-	
 
 	local btnE, resE = dialog.run(dialogEmail)
 	
@@ -124,6 +119,7 @@ function logIn()
 
 end
 
+-- push-a commitane promjene na udaljeni repozitorij, traži password i username tog repozitorija
 function pushToOrigin()
 	
 	local yes_no = {"OK","Cancel"}
@@ -149,32 +145,34 @@ function pushToOrigin()
 	
 	cmd = "cd "..FILE_DIR_PATH.."\ngit config --get remote.origin.url\n"--makni 8 slova i dodaj @
 	result = runCommand(cmd)
-	geany.message(" "..cmd.." :\n"..result.."")
 	resultOdrezani = string.sub(result, 9) --pocni od 9.og !
-	geany.message(resultOdrezani)
+	--geany.message(resultOdrezani)
+	
 	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
 	result = runCommand(cmd)
-	geany.message(" "..cmd.." :\n"..result.."")
-
-	
-	
 end
-cmds={
-	}
---izmjena
+
+
+local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
+local FILE_DIR_PATH = geany.dirname(geany.filename())
+local FILE_NAME = geany.basename(geany.filename())
+
+
 	geany.banner = "Geany Git assistant"
 	
 	instaled=isInstaled("git")
 	if instaled == nil then return end
 
-	cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
-	--!! 2>&1 pokazuje ili output ili error
-	--!! ako ulancavamo 2 komande, između stavljamo \n
+	local cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 	
-	handle = io.popen(cmd)
-	result = handle:read("*a")
-	handle:close()
-	geany.message(""..cmd.." :\n"..result.."")
+	-- 2>&1 pokazuje ili output ili error
+	-- ako ulancavamo 2 komande, između stavljamo \n ili |
+	
+	local result = runCommand(cmd)
+--	handle = io.popen(cmd)
+	--result = handle:read("*a")
+	--handle:close()
+	--geany.message(""..cmd.." :\n"..result.."")
 	
 	
 	if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
