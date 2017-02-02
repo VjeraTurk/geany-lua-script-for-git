@@ -100,7 +100,7 @@ cmds={
 	cmd="koko --version"	--!! pokazuje ili output ili error
 	handle = io.popen(cmd)
 	result = handle:read("*a")
-	--handle:close()
+	handle:close()
 	
 	geany.message(" "..cmd.." :\n"..result.."")
 
