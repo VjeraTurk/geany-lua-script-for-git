@@ -73,7 +73,7 @@ end
 	local yes_no = {"OK","Cancel"}
 	local dialogUser= dialog.new ("Unesi Username", yes_no)
 	local dialogPass= dialog.new ("Unesi Password", yes_no)
-	local dialogEmail= dialog.new ("Unesi Password", yes_no)
+	local dialogEmail= dialog.new ("Unesi Email", yes_no)
 	--dialog.label(dialog, "Pick files to add")
 	dialog.label(dialogUser, "							Push						")
 	dialog.text(dialogUser, "username", "xxxxxx", "Username" )
@@ -94,14 +94,7 @@ end
 		end
 	end
 
-	if resP then
-		for key,value in pairs(resP)
-			do
-			msg="\n"..key..":\t"..value
-			geany.message(msg)			
-			psw=value
-		end
-	end
+
 	
 	
 	if resE then
@@ -110,6 +103,15 @@ end
 			msg = "\n"..key..":\t"..value
 			geany.message(msg)			
 			email=value
+		end
+	end
+
+	if resP then
+		for key,value in pairs(resP)
+			do
+			msg="\n"..key..":\t"..value
+			geany.message(msg)			
+			psw=value
 		end
 	end
 
@@ -131,8 +133,9 @@ end
 	
 
 	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
---	result = runCommand(cmd)
---	geany.message(" "..cmd.." :\n"..result.."")
+	result = runCommand(cmd)
+	geany.message(" "..cmd.." :\n"..result.."")
+
 	--[[
 	if message ~= nil then
 		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
