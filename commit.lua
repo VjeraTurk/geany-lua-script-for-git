@@ -285,6 +285,7 @@ end
 
 
 ]]
+--izmjena
 	-- Require setting user.name and email per-repo:
 	--$ git config --global user.useConfigOnly true
 	-- Remove email address from global config:
