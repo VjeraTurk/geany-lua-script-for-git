@@ -39,7 +39,7 @@ function addFiles(path)
 
 	local files = scandir(path)
 	local yes_no = {"Add","Cancel"}
-	local dialog= dialog.new ("banner", yes_no)
+	local dialog= dialog.new ("Add files", yes_no)
 	dialog.label(dialog, "Pick files to add")
 		
 	for i,file in ipairs(files) do
