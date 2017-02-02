@@ -168,7 +168,7 @@ local FILE_NAME = geany.basename(geany.filename())
 	if instaled == nil then return end
 
 	local cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"	
-	local result = runCommand(cmd)
+	local result = runCommand("cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"	)
 	
 	--if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
 	if  string.match(result,"Not a git repository") then	
@@ -219,9 +219,7 @@ if result==''  then
 			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
 			result=runCommand(cmd)
 		end
-	
-	--Changes not staged for commit or untracked files present
-	
+
 	if string.match(result,"Changes not staged for commit") or string.match(result,"untracked files present") then
 	
 		geany.banner = "Untracked files present or changes not staged for commit"
