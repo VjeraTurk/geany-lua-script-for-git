@@ -72,22 +72,23 @@ end
 --	addFiles(FILE_DIR_PATH)
 
 
-	local yes_no = {"Push","Cancel"}
-	
+	local yes_no = {"Push","Cancel"}	
 	local dialog= dialog.new ("Push", yes_no)
-	dialog.label(dialog, "Push")
+	
+	dialog.label(dialog, "							Push							")
 	dialog:heading("Credentials on your remote origin site (github/gitlab/bitbucket):")
 	dialog:text("name", "VjeraTurk","Username:")
 	dialog:password("pass", nil,  "Password:")
 	
-	button, results = dialog:run()
+	button, results = dialog:run(dialog)
 
 	local btn = {"Commit","Cancel","Add more files"}
-	local dlgc = dialog.new ("Commit your changes", btn) 
+	local dlgc = dialog.new("Commit your changes", btn) 
+	dlgc:label("-----Push------")
 	dlgc:text("msg", "no comment","Commit message:")
 	
 	-- Show the dialog
-	local button, results = dlgc:run()
+	local button, results = dlgc:run(dlgc)
 	
 	message=results[msg]
 	geany.message(message)
