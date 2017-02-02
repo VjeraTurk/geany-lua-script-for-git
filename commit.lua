@@ -186,8 +186,6 @@ function pushToOrigin()
 	resultOdrezani = string.sub(result, 9) --pocni od 9.og !
 -- cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
 	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
-
-
 	--cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
 	result = runCommand(cmd)
 	geany.message(" "..cmd.." :\n"..result.."")
