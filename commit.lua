@@ -100,7 +100,7 @@ cmds={
 	cmd="koko --version"	--!! pokazuje ili output ili error
 	handle = io.popen(cmd)
 	result = handle:read("*a")
-	handle:close()
+	--handle:close()
 	
 	geany.message(" "..cmd.." :\n"..result.."")
 
@@ -262,6 +262,17 @@ function dirLookup(dir)
    return t
 end
 
+
+function getBrowserCommand()
+
+	if os.execute("firefox --version") == 0 then return "firefox"
+	elseif os.execute("google-chrome --version") == 0 then return "google-chrome"
+	else
+		return "diff"
+	end
+end
+
+
 ]]
 	-- Require setting user.name and email per-repo:
 	--$ git config --global user.useConfigOnly true
@@ -272,12 +283,3 @@ end
 
 --komentar
 --komentar novi
-
-function getBrowserCommand()
-
-	if os.execute("firefox --version") == 0 then return "firefox"
-	elseif os.execute("google-chrome --version") == 0 then return "google-chrome"
-	else
-		return "diff"
-	end
-end
