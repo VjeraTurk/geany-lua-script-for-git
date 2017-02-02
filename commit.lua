@@ -117,30 +117,29 @@ end
 function logIn()
 
 	local yes_no = {"OK","Cancel"}
-	local dialogUser= dialog.new ("Unesi Username", yes_no)
-	local dialogEmail= dialog.new ("Unesi Email", yes_no)
-	dialog.label(dialogUser, "			Log In				")
-	dialog.text(dialogUser, "username", "xxxxxx", "Username" )
-	dialog.text(dialogEmail, "email", "", "Email" )
-	dialog.label(dialogEmail, "			Log In				")
+	local dialogUser = dialog.new ("		Log In				", yes_no)
+	local dialogEmail = dialog.new("		Log In				", yes_no)
+	dialog.text(dialogUser, "username", "", "Username" )
+	dialog.text(dialogEmail, "email", "", "Email   " )
 
 	local btU, resU = dialog.run(dialogUser)
-	local btnE, resE = dialog.run(dialogEmail)
-	
-	if resU then
+
 		for key,value in pairs(resU)
 			do
 			msg = "\n"..key..":\t"..value
-			geany.message(msg)			
+			--geany.message(msg)			
 			name=value
 		end
-	end
+	
+
+	local btnE, resE = dialog.run(dialogEmail)
+	
 		
 	if resE then
 		for key,value in pairs(resE)
 			do
 			msg = "\n"..key..":\t"..value
-			geany.message(msg)			
+			--geany.message(msg)			
 			email=value
 		end
 	end
@@ -148,7 +147,7 @@ function logIn()
 	cmd="cd "..FILE_DIR_PATH.."\ngit config user.name "..name.."\ngit config user.email "..email
 	
 	result=runCommand(cmd)
-	geany.message(" "..cmd.." :\n"..result.."")
+	--geany.message(" "..cmd.." :\n"..result.."")
 	
 
 end
@@ -166,7 +165,6 @@ cmds={
 	geany.banner = "Geany Git assistant"
 	
 	
-	logIn()
 	
 	instaled=isInstaled("git")
 	if instaled== nil then return end
@@ -195,6 +193,9 @@ cmds={
 			handle:close()
 			geany.message(result)
 			
+			--git config user.name git config user.email
+			logIn()
+	
 			--git add
 			cmd = "cd "..FILE_DIR_PATH.."  2>&1\ngit add "..FILE_PATH.."  2>&1"
 
