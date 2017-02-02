@@ -126,14 +126,6 @@ cmds={
 
 	geany.banner = "Geany Git assistant"
 	
-	
-	cmd="kokodak"
-	handle = io.popen(cmd)
-	result = handle:read("*a")
-	handle:close()
-	geany.message(""..cmd.." :\n"..result.."")
-	
-	
 	instaled=isInstaled("git")
 	if instaled== nil then return end
 
@@ -141,6 +133,10 @@ cmds={
 	--!! 2>&1 pokazuje ili output ili error
 	--!! ako ulancavamo 2 komande, između stavljamo \n
 	
+	handle = io.popen(cmd)
+	result = handle:read("*a")
+	handle:close()
+	geany.message(""..cmd.." :\n"..result.."")
 	
 	
 	if result=="fatal: Not a git repository (or any of the parent directories): .git\n" then --!! obavezno \n, u suprotnom ne radi
