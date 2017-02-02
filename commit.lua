@@ -313,6 +313,7 @@ if result==''  then
 
 	end
 	
+	geany.banner = "Push your changes"	
 	local choice = geany.confirm ( "Push changes to remote origin", "Do you want to push changes to remote origin?", true )
 
 	if choice then pushToOrigin()
