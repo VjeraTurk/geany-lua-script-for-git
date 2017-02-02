@@ -97,6 +97,7 @@ function IsInstaled(program)
 			install_msg="Before you start using "..program..", you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ apt-get install "..program.." \nFedora:\n $ yum install "..program..""
 			geany.message(install_msg)
 			return nil
+		
 		else return 1
 		
 		end
@@ -125,8 +126,9 @@ cmds={
 	handle:close()
 	
 	geany.message(" "..cmd.." :\n"..result)
-	
-	r=IsInstaled("koko")
+
+	instaled=IsInstaled("git")
+	if instaled== nil then return end
 --[[
 		if string.match(result,"not found") then
 			install_msg="Before you start using Git, you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ apt-get install git \nFedora:\n $ yum install git"
