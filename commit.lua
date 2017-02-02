@@ -151,6 +151,44 @@ function logIn()
 
 end
 
+function pushToOrigin()
+	
+	local yes_no = {"OK","Cancel"}
+	local dialogUser= dialog.new ("		Username		", yes_no)
+	local dialogPass= dialog.new ("		Password		", yes_no)
+	dialog.text(dialogUser, "username", "", "Username" )
+	dialog.password (dialogPass, "password", "", "Password" )
+	
+	local btU, resU = dialog.run(dialogUser)
+	local btnP, resP = dialog.run(dialogPass)
+	
+	if resU then
+		for key,value in pairs(resU)
+			do
+			msg = "\n"..key..":\t"..value
+			geany.message(msg)			
+			name=value
+		end
+	end
+	
+	if resP then
+		for key,value in pairs(resP)
+			do
+			msg="\n"..key..":\t"..value
+			geany.message(msg)			
+			psw=value
+		end
+	end
+
+--	cmd = "git config --get remote.origin.url"--makni 8 slova i dodaj @
+--	result = runCommand(cmd)
+
+	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
+	result = runCommand(cmd)
+	geany.message(" "..cmd.." :\n"..result.."")
+
+
+end
 cmds={
 	--["force_local_users"]="git config --global user.useConfigOnly true",
 	["add_remote_origin"]="git add remote origin ",
@@ -228,18 +266,19 @@ if result==''  then
 	geany.banner = "Commit your changes"
 	local button, message = geany.input("Commit message", "no comment")
 	
-	if message ~= nil then
-		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
-	else
-		cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
-	end
+		
+		if message ~= nil then
+			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\""
+		else
+			cmd="cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \"no comment\""
+		end
 
-	handle = io.popen(cmd)
-	result = handle:read("*a")
-	handle:close()
+		handle = io.popen(cmd)
+		result = handle:read("*a")
+		handle:close()
 
-	geany.message(" "..cmd.." :\n"..result.."")
-	
+		geany.message(" "..cmd.." :\n"..result.."")
+		
 	--Changes not staged for commit or untracked files present
 	
 	--if string.match(result,"nothing added to commit but untracked files present") then
@@ -272,7 +311,8 @@ if result==''  then
 		end
 
 	end
-
+	
+	pushToOrigin()
 end
 
 --prije git comande, cd komanda u direktorij filea
