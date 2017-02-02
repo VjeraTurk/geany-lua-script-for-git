@@ -10,9 +10,37 @@
 		prozor ima Ok i Cancel (i x) ali izvrši commit bez obzira, nema provjere sta je odabrano -> napraviti dialog ili geany confirm
 	]]
 
-	local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
-    local FILE_DIR_PATH = geany.dirname(geany.filename())
-	local FILE_NAME = geany.basename(geany.filename())
+local FILE_PATH = geany.filename() --!! geany.filename() cijeli path, ne samo ime
+local FILE_DIR_PATH = geany.dirname(geany.filename())
+local FILE_NAME = geany.basename(geany.filename())
+
+--izvrsava komandu
+function runCommand(cmd)
+	
+	handle = io.popen(cmd)
+	result = handle:read("*a")
+	handle:close()
+	geany.message(" "..cmd.." :\n"..result.."")
+	
+	return result
+end
+	
+--provjerava je li neki program instliran
+function isInstaled(program)
+
+	local cmd = ""..program.." --version 2>&1"
+	result=runCommand(cmd)
+	
+		if string.match(result,"not found") then
+			install_msg="Before you start using "..program..", you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ apt-get install "..program.." \nFedora:\n $ yum install "..program..""
+			geany.message(install_msg)
+			return nil
+		
+		else return 1
+		
+		end
+		
+end
 
 -- Lua implementation of PHP scandir function
 function scandir(directory)
@@ -27,7 +55,7 @@ function scandir(directory)
     return t
 end
 
--- spoji vrijednosti u tablici u dugacak string s /t između
+-- spoji vrijednosti u tablici u dugacak string s \t između
 function listvalues(s)
     local t = { }
     for k,v in ipairs(s) do
@@ -36,7 +64,7 @@ function listvalues(s)
     return table.concat(t,'\t')
 end
 
--- ispisuje checkboxove svih fileova u folderu čiji path primi, radi git add na odabranima 
+-- ispisuje checkboxove svih fileova u folderu čiji path primi, radi git add na odabranima. Vraca tablicu odabranih
 function addFiles(path)
 
 	local files = scandir(path)
@@ -54,64 +82,19 @@ function addFiles(path)
 
 	if results then
 
-		for key,value in pairs(results)
-			do
+		for key,value in pairs(results) do
 			if value == "1" then
 				checked[i]=key
 				i=i+1
 				cmd ="cd "..path.."  2>&1\ngit add "..key.."  2>&1"
-				
 				result=runCommand(cmd)
-				
-				--handle = io.popen(cmd)
-				--result = handle:read("*a")
-				--handle:close()
-				--geany.message(" "..cmd.." :\n"..result.."")
-				
 			end
-		
 		end
-	--[[		
-		i=i-1
-		for j=1,i do
-		geany.message(checked[j])
-		end
-	]]
 		return checked
 	end	
 	
 end
 
-function isInstaled(program)
-
-	local cmd = ""..program.." --version 2>&1"	--!! pokazuje ili output ili error
-	handle = io.popen(cmd)
-	result = handle:read("*a")
-	--handle:close()
-	
-	geany.message(" "..cmd.." :\n"..result)
-
-		if string.match(result,"not found") then
-			install_msg="Before you start using "..program..", you have to make it available on your computer. You can either install it as a package or via another installer, or download the source code and compile it yourself. \nDebian/Ubuntu:\n$ apt-get install "..program.." \nFedora:\n $ yum install "..program..""
-			geany.message(install_msg)
-			return nil
-		
-		else return 1
-		
-		end
-		
-end
-
-function runCommand(cmd)
-	
-	handle = io.popen(cmd)
-	result = handle:read("*a")
-	handle:close()
-	geany.message(" "..cmd.." :\n"..result.."")
-	
-	return result
-end
-	--geany.message(""..FILE_PATH.."\n"..FILE_DIR_PATH.."\n"..FILE_NAME.."")
 
 function logIn()
 	--maknuti gumbe, oni us bzvez (samo ok?)
@@ -122,11 +105,7 @@ function logIn()
 	dialog.text(dialogEmail, "email", "", "Email   " )
 
 	local btU, resU = dialog.run(dialogUser)
-
-		for key,value in pairs(resU)
-			do
-			msg = "\n"..key..":\t"..value
-			--geany.message(msg)			
+		for key,value in pairs(resU) do			
 			name=value
 		end
 	
@@ -134,10 +113,7 @@ function logIn()
 	local btnE, resE = dialog.run(dialogEmail)
 	
 	if resE then
-		for key,value in pairs(resE)
-			do
-			msg = "\n"..key..":\t"..value
-			--geany.message(msg)			
+		for key,value in pairs(resE) do	
 			email=value
 		end
 	end
@@ -145,8 +121,6 @@ function logIn()
 	cmd="cd "..FILE_DIR_PATH.."\ngit config user.name "..name.."\ngit config user.email "..email
 	
 	result=runCommand(cmd)
-	--geany.message(" "..cmd.." :\n"..result.."")
-	
 
 end
 
