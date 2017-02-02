@@ -123,7 +123,7 @@ function runCommand(cmd)
 	return result
 end
 --	cmd="{GIT} push --repo https://YOUR_USER_NAME:YOUR_PASSWORD@bitbucket.org/repo.git"
-	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://VjeraTurk:schweppes6@github.com/VjeraTurk/test 2>&1"
+	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@github.com/VjeraTurk/test 2>&1"
 	result = runCommand(cmd)
 	geany.message(" "..cmd.." :\n"..result.."")
 	--[[
