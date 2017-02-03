@@ -237,7 +237,9 @@ if result==''  then
 	geany.banner = "Push your changes"	
 	local choice = geany.confirm ( "Push changes to remote origin", "Do you want to push changes to remote origin?", true )
 
-	if choice then pushToOrigin()
+	if choice then 
+	result = pushToOrigin()
+		if result then geany.message("Your changes are now saved in remote repositorie!") end
 	end
 	
 end
