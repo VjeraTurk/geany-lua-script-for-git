@@ -135,20 +135,21 @@ function pushToOrigin(warning)
 	
 	local btU, resU = dialog.run(dialogUser)
 	
-	if ( resU and butU == 1 ) then
+	
+	if (btU ~= 1) then return end
+	
+	if resU then
 		for key,value in pairs(resU) do	
 			name=value
 		end
-	else return
 	end
 	
 	local btnP, resP = dialog.run(dialogPass)
 	
-	if (resP and butP == 1 )  then
+	if resP then
 		for key,value in pairs(resP) do
 			psw=value
 		end
-	else return
 	end
 	
 	cmd = "cd "..FILE_DIR_PATH.."\ngit config --get remote.origin.url\n"
@@ -249,7 +250,7 @@ if result==''  then
 	local choice = geany.confirm ( "Push changes to remote origin", "Do you want to push changes to remote origin?", true )
 
 	if choice then 
-	result = pushToOrigin("")
+	result = pushToOrigin(" ")
 		
 	
 		
