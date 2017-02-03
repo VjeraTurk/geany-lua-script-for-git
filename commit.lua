@@ -154,6 +154,8 @@ function pushToOrigin()
 	
 	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
 	result = runCommand(cmd)
+	
+	return result
 end
 
 
