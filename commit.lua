@@ -155,8 +155,8 @@ function pushToOrigin(warning)
 	end
 	
 	cmd = "cd "..FILE_DIR_PATH.."\ngit config --get remote.origin.url\n"
-	result = runCommand(cmd)
-	resultOdrezani = string.sub(result, 9) --pocni od 9.og !
+	origin = runCommand(cmd)
+	resultOdrezani = string.sub(origin, 9) --pocni od 9.og !
 	
 	cmd="cd "..FILE_DIR_PATH.." 2>&1\ngit push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
 	result = runCommand(cmd)
@@ -165,7 +165,9 @@ function pushToOrigin(warning)
 	--result2 = runCommand(cmd2)	
 	
 		if (string.match(result,"set up to track") --[[or string.match(result2,"set up to track")]]) then
-			geany.message("Your changes are now saved in remote repositorie!")				
+			geany.message("Your changes are now saved in remote repositorie!")	
+			os.execute(string.format('xdg-open "%s"', origin))
+							
 		else
 			result = pushToOrigin("\nOoops. Wrong Password or Username.\n(Use credentials you use to login\non your repository website)\n")
 		end
