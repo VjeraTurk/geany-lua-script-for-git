@@ -260,6 +260,7 @@ if result==''  then
 
 	--geany.banner = "Pull your changes"	
 
+	
 	--pullFromOrigin()
 	
 	geany.banner = "Push your changes"	
