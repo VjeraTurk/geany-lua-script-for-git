@@ -157,7 +157,7 @@ function pushToOrigin(warning)
 		if string.match(result,"set up to track remote ") then
 			geany.message("Your changes are now saved in remote repositorie!")
 		else
-			result = pushToOrigin("Wrong Password or Username. Please repeate. Use password and username you use to log in on your remote repository")
+			result = pushToOrigin("Wrong Password or Username.\n Use password and username you usualy use \nto login on your repository website")
 		end
 		
 	
