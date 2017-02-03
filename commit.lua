@@ -249,7 +249,7 @@ if result==''  then
 	local choice = geany.confirm ( "Push changes to remote origin", "Do you want to push changes to remote origin?", true )
 
 	if choice then 
-	result = pushToOrigin(" ")
+	result = pushToOrigin("")
 		
 	
 		
