@@ -20,7 +20,7 @@ function runCommand(cmd)
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
---	geany.message(" "..cmd.." :\n"..result.."")
+--÷	geany.message(" "..cmd.." :\n"..result.."")
 	
 	return result
 end
