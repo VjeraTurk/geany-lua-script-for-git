@@ -154,6 +154,8 @@ function pushToOrigin()
 	result = runCommand(cmd)
 	
 		if string.match(result,"set up to track remote ") then
+			geany.message("Your changes are now saved in remote repositorie!")
+		else
 			result = pushToOrigin()
 		end
 		
