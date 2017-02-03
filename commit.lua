@@ -8,6 +8,12 @@
 	
 ]]
 
+
+local FILE_PATH = geany.filename() -- geany.filename() cijeli path, ne samo ime!
+local FILE_DIR_PATH = geany.dirname(geany.filename())
+local FILE_NAME = geany.basename(geany.filename())
+
+
 --izvrsava komandu
 function runCommand(cmd)
 	
@@ -150,10 +156,6 @@ function pushToOrigin()
 	result = runCommand(cmd)
 end
 
-
-local FILE_PATH = geany.filename() -- geany.filename() cijeli path, ne samo ime!
-local FILE_DIR_PATH = geany.dirname(geany.filename())
-local FILE_NAME = geany.basename(geany.filename())
 
 	geany.banner = "Geany Git assistant"
 	
