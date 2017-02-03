@@ -1,7 +1,7 @@
 --[[
 	Requirements
-		-git
-		-geany-plugins geanyLua
+		- git
+		- geany-plugins geanyLua
 	
 	Place this script in:  /usr/share/geany-plugins/geanylua/edit
 	Run from geany IDE by choosing Tools->LuaScripts->Edit->Commit
@@ -14,7 +14,7 @@ function runCommand(cmd)
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
-	geany.message(" "..cmd.." :\n"..result.."")
+	--geany.message(" "..cmd.." :\n"..result.."")
 	
 	return result
 end
