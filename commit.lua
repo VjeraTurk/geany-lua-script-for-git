@@ -210,7 +210,7 @@ if result==''  then
 		if message ~= nil then
 			result=runCommand("cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\"")
 		end
-
+--izmjena
 	if string.match(result,"Changes not staged for commit") or string.match(result,"untracked files present") then
 	
 		geany.banner = "Untracked files present or changes not staged for commit"
