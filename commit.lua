@@ -145,6 +145,8 @@ function pushToOrigin(warning)
 	end
 	
 	local btnP, resP = dialog.run(dialogPass)
+
+	if (btP ~= 1) then return end
 	
 	if resP then
 		for key,value in pairs(resP) do
