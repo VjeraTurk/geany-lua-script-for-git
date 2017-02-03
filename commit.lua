@@ -258,9 +258,12 @@ if result==''  then
 
 	end
 
-	--geany.banner = "Pull your changes"	
+	geany.banner = "Pull your changes"	
+	local choice = geany.confirm ( "Sometimes push requires pull", "Do you want to pull from origin?", true )
 
-	--pullFromOrigin()
+	if choice then 
+		pullFromOrigin()
+	end
 	
 	geany.banner = "Push your changes"	
 	local choice = geany.confirm ( "Push changes to remote origin", "Do you want to push changes to remote origin?", true )
@@ -269,9 +272,6 @@ if result==''  then
 
 	if choice then 
 	result = pushToOrigin(" ")
-		
-	
-		
 		--geany.message("Your changes are now saved in remote repositorie!")
 	end
 	
