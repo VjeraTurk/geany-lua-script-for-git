@@ -147,11 +147,9 @@ function pushToOrigin()
 		end
 	end
 	
-	cmd = "cd "..FILE_DIR_PATH.."\ngit config --get remote.origin.url\n"--makni 8 slova i dodaj @
+	cmd = "cd "..FILE_DIR_PATH.."\ngit config --get remote.origin.url\n"
 	result = runCommand(cmd)
 	resultOdrezani = string.sub(result, 9) --pocni od 9.og !
-	--geany.message(resultOdrezani)
-	
 	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
 	result = runCommand(cmd)
 	
