@@ -134,7 +134,6 @@ function pushToOrigin(warning)
 	dialog.password (dialogPass, "password", "", "Password" )
 	
 	local btU, resU = dialog.run(dialogUser)
-	local btnP, resP = dialog.run(dialogPass)
 	
 	if ( resU and butU == 1 ) then
 		for key,value in pairs(resU) do	
@@ -142,6 +141,8 @@ function pushToOrigin(warning)
 		end
 	else return
 	end
+	
+	local btnP, resP = dialog.run(dialogPass)
 	
 	if (resP and butP == 1 )  then
 		for key,value in pairs(resP) do
