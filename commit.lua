@@ -244,7 +244,7 @@ if result==''  then
 			result = pushToOrigin()
 		end
 		
-		if result then geany.message("Your changes are now saved in remote repositorie!") end
+		--geany.message("Your changes are now saved in remote repositorie!")
 	end
 	
 end
