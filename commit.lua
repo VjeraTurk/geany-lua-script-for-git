@@ -173,8 +173,9 @@ end
 
 function pullFromOrigin()
 
+	geany.banner = "Pull your changes"	
 	result = runCommand("cd "..FILE_DIR_PATH.."  2>&1\ngit pull -u origin master 2>&1\n")
-	
+	return result
 
 end
 
@@ -218,15 +219,14 @@ end
 					if result=='' then
 						geany.message("Hurray!", "Repositories are now linked. Each time you push your code it will be saved on your remote origin. ")
 						os.execute(string.format('xdg-open "%s"', origin))
-						pullFromOrigin()
+						result = pullFromOrigin()
+						if result == "pulled"  then geany.message("Pullano") end
 					end
 					
 				end
 		end
 
 	end
-
-	pullFromOrigin()
 
 if result==''  then
 	
@@ -258,9 +258,9 @@ if result==''  then
 
 	end
 
-	geany.banner = "Pull your changes"	
+	--geany.banner = "Pull your changes"	
 
-	pullFromOrigin()
+	--pullFromOrigin()
 	
 	geany.banner = "Push your changes"	
 	local choice = geany.confirm ( "Push changes to remote origin", "Do you want to push changes to remote origin?", true )
