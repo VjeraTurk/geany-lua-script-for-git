@@ -261,6 +261,14 @@ if result==''  then
 	
 end
 --[[
+
+
+	references:
+	
+	https://plugins.geany.org/geanylua/geanylua-ref.html
+	http://plugins.geany.org/geanylua/geanylua-input.html
+	http://lua-users.org/
+	
 	cmds:
 	-- 2>&1 pokazuje ili output ili error
 	-- ako ulancavamo 2 komande, između stavljamo \n ili |
