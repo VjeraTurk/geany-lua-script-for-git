@@ -153,6 +153,11 @@ function pushToOrigin()
 	cmd="cd "..FILE_DIR_PATH.."\n git push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
 	result = runCommand(cmd)
 	
+		if string.match(result,"Authentication failed") then
+			result = pushToOrigin()
+		end
+		
+	
 	return result
 end
 
@@ -240,9 +245,7 @@ if result==''  then
 	if choice then 
 	result = pushToOrigin()
 		
-		while string.match(result,"Authentication failed") do
-			result = pushToOrigin()
-		end
+	
 		
 		--geany.message("Your changes are now saved in remote repositorie!")
 	end
