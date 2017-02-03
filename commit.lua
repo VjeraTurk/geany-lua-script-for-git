@@ -7,12 +7,9 @@
 	Run from geany IDE by choosing Tools->LuaScripts->Edit->Commit
 	
 ]]
-
-
 local FILE_PATH = geany.filename() -- geany.filename() cijeli path, ne samo ime!
 local FILE_DIR_PATH = geany.dirname(geany.filename())
 local FILE_NAME = geany.basename(geany.filename())
-
 
 --izvrsava komandu
 function runCommand(cmd)
@@ -174,8 +171,6 @@ end
 function pullFromOrigin()
 
 	result = runCommand("cd "..FILE_DIR_PATH.."  2>&1\ngit pull -u origin master 2>&1\n")
-	
-
 end
 
 	geany.banner = "Geany Git assistant"
@@ -218,6 +213,7 @@ end
 					if result=='' then
 						geany.message("Hurray!", "Repositories are now linked. Each time you push your code it will be saved on your remote origin. ")
 						os.execute(string.format('xdg-open "%s"', origin))
+						pullFromOrigin()
 					end
 					
 				end
@@ -225,7 +221,7 @@ end
 
 	end
 
-	pullFromOrigin()
+	--pullFromOrigin()
 
 if result==''  then
 	
