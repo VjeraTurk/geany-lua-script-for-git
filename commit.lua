@@ -133,10 +133,10 @@ function pushToOrigin(warning)
 	dialog.text(dialogUser, "username", "", "Username" )
 	dialog.password (dialogPass, "password", "", "Password" )
 	
-	local btU, resU = dialog.run(dialogUser)
+	local btnU, resU = dialog.run(dialogUser)
 	
 	
-	if (btU ~= 1) then return end
+	if (btnU ~= 1) then return end
 	
 	if resU then
 		for key,value in pairs(resU) do	
@@ -146,7 +146,7 @@ function pushToOrigin(warning)
 	
 	local btnP, resP = dialog.run(dialogPass)
 
-	if (btP ~= 1) then return end
+	if (btnP ~= 1) then return end
 	
 	if resP then
 		for key,value in pairs(resP) do
