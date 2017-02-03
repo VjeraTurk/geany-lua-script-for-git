@@ -20,7 +20,7 @@ function runCommand(cmd)
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
---÷	geany.message(" "..cmd.." :\n"..result.."")
+	geany.message(" "..cmd.." :\n"..result.."")
 	
 	return result
 end
@@ -170,6 +170,13 @@ function pushToOrigin(warning)
 	return result
 end
 
+
+function pullFromOrigin()
+
+	runCommand("cd "..FILE_DIR_PATH.."  2>&1\npull -u origin master")
+
+
+end
 
 	geany.banner = "Geany Git assistant"
 	
