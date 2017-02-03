@@ -7,9 +7,12 @@
 	Run from geany IDE by choosing Tools->LuaScripts->Edit->Commit
 	
 ]]
+
+
 local FILE_PATH = geany.filename() -- geany.filename() cijeli path, ne samo ime!
 local FILE_DIR_PATH = geany.dirname(geany.filename())
 local FILE_NAME = geany.basename(geany.filename())
+
 
 --izvrsava komandu
 function runCommand(cmd)
@@ -170,16 +173,9 @@ end
 
 function pullFromOrigin()
 
-	cmd = "cd "..FILE_DIR_PATH.."\ngit config --get remote.origin.url\n"
-	result = runCommand(cmd)
-	resultOdrezani = string.sub(result, 9) --pocni od 9.og !
---	cmd="cd "..FILE_DIR_PATH.." 2>&1\ngit push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
---	result = runCommand(cmd)
+	result = runCommand("cd "..FILE_DIR_PATH.."  2>&1\ngit pull -u origin master 2>&1\n")
 	
-	result = runCommand("cd "..FILE_DIR_PATH.."  2>&1\ngit pull -u origin 2>&1\n")
-	result = runCommand("cd "..FILE_DIR_PATH.."  2>&1\ngit pull -u repo https://@"..resultOdrezani.." 2>&1")
 
---
 end
 
 	geany.banner = "Geany Git assistant"
@@ -230,7 +226,7 @@ end
 
 	end
 
-	--pullFromOrigin()
+	pullFromOrigin()
 
 if result==''  then
 	
