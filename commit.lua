@@ -136,16 +136,18 @@ function pushToOrigin(warning)
 	local btU, resU = dialog.run(dialogUser)
 	local btnP, resP = dialog.run(dialogPass)
 	
-	if ( resU and butU ==1 ) then
+	if ( resU and butU == 1 ) then
 		for key,value in pairs(resU) do	
 			name=value
 		end
+	else return
 	end
 	
-	if resP then
+	if (resP and butP == 1 )  then
 		for key,value in pairs(resP) do
 			psw=value
 		end
+	else return
 	end
 	
 	cmd = "cd "..FILE_DIR_PATH.."\ngit config --get remote.origin.url\n"
