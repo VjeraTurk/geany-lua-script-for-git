@@ -173,8 +173,8 @@ end
 
 function pullFromOrigin()
 
-	runCommand("cd "..FILE_DIR_PATH.."  2>&1\npull -u origin master")
-
+	result = runCommand("cd "..FILE_DIR_PATH.."  2>&1\ngit pull -u origin master 2>&1\n")
+	
 
 end
 
@@ -225,6 +225,8 @@ end
 
 	end
 
+	pullFromOrigin()
+
 if result==''  then
 	
 	geany.banner = "Commit your changes"
@@ -254,9 +256,15 @@ if result==''  then
 		end
 
 	end
+
+	geany.banner = "Pull your changes"	
+
+	pullFromOrigin()
 	
 	geany.banner = "Push your changes"	
 	local choice = geany.confirm ( "Push changes to remote origin", "Do you want to push changes to remote origin?", true )
+
+
 
 	if choice then 
 	result = pushToOrigin(" ")
