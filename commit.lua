@@ -124,11 +124,12 @@ function logIn()
 end
 
 -- push-a commitane promjene na udaljeni repozitorij, traži password i username tog repozitorija
-function pushToOrigin()
+function pushToOrigin(warning)
 	
 	local yes_no = {"OK","Cancel"}
 	local dialogUser= dialog.new ("		Username		", yes_no)
 	local dialogPass= dialog.new ("		Password		", yes_no)
+	dialog.label(dialogUser, warning)
 	dialog.text(dialogUser, "username", "", "Username" )
 	dialog.password (dialogPass, "password", "", "Password" )
 	
@@ -156,7 +157,7 @@ function pushToOrigin()
 		if string.match(result,"set up to track remote ") then
 			geany.message("Your changes are now saved in remote repositorie!")
 		else
-			result = pushToOrigin()
+			result = pushToOrigin("Wrong Password or Username")
 		end
 		
 	
@@ -245,7 +246,7 @@ if result==''  then
 	local choice = geany.confirm ( "Push changes to remote origin", "Do you want to push changes to remote origin?", true )
 
 	if choice then 
-	result = pushToOrigin()
+	result = pushToOrigin(" ")
 		
 	
 		
