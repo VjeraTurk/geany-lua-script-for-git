@@ -136,7 +136,7 @@ function pushToOrigin(warning)
 	local btU, resU = dialog.run(dialogUser)
 	local btnP, resP = dialog.run(dialogPass)
 	
-	if resU then
+	if ( resU and butU ==1 ) then
 		for key,value in pairs(resU) do	
 			name=value
 		end
@@ -157,7 +157,7 @@ function pushToOrigin(warning)
 		if string.match(result,"set up to track remote ") then
 			geany.message("Your changes are now saved in remote repositorie!")
 		else
-			result = pushToOrigin("\nOoops. Wrong Password or Username.\nUse credentials you use to login\non your repository website\n")
+			result = pushToOrigin("\nOoops. Wrong Password or Username.\n(Use credentials you use to login\non your repository website)\n")
 		end
 		
 	
