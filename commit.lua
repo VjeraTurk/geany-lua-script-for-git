@@ -14,7 +14,7 @@ function runCommand(cmd)
 	handle = io.popen(cmd)
 	result = handle:read("*a")
 	handle:close()
-	--geany.message(" "..cmd.." :\n"..result.."")
+	geany.message(" "..cmd.." :\n"..result.."")
 	
 	return result
 end
@@ -205,7 +205,7 @@ local FILE_NAME = geany.basename(geany.filename())
 if result==''  then
 	
 	geany.banner = "Commit your changes"
-	message = geany.input("Commit message", "no comment")
+	message = geany.input("Write a short message that will be saved as comment to your commit", "no comment")
 	
 		if message ~= nil then
 			result=runCommand("cd "..FILE_DIR_PATH.."  2>&1\n git commit -m \""..message.."\"")
