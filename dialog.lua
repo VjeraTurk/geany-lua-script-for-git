@@ -8,6 +8,8 @@ function scandir(directory)
     end
     
     ---neka izmejena	
+    
+    --neka druga izmjena
     pfile:close()
     return t
 end
