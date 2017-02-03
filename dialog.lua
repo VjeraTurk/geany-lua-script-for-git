@@ -6,6 +6,8 @@ function scandir(directory)
         i = i + 1
         t[i] = filename
     end
+    
+    ---neka izmejena	
     pfile:close()
     return t
 end
