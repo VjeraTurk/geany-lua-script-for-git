@@ -241,7 +241,6 @@ if result==''  then
 end
 --[[
 	cmds:
-	
 	-- 2>&1 pokazuje ili output ili error
 	-- ako ulancavamo 2 komande, između stavljamo \n ili |
 	-- prije git comande, cd komanda u direktorij datoteke
