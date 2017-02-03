@@ -1,19 +1,12 @@
 --[[
-	Opis
-
-	cmds:
+	Requirements
+		-git
+		-geany-plugins geanyLua
 	
-	-- 2>&1 pokazuje ili output ili error
-	-- ako ulancavamo 2 komande, između stavljamo \n ili |
+	Place this script in:  /usr/share/geany-plugins/geanylua/edit
+	Run from geany IDE by choosing Tools->LuaScripts->Edit->Commit
 	
-	
-	--"git add remote origin "
-	--"git commit -m "
-	--"git config user.name ",--"Your Name Here"
-	--"git config user.email ",--"your@email.com"
-
-		prozor ima Ok i Cancel (i x) ali izvrši commit bez obzira, nema provjere sta je odabrano -> napraviti dialog ili geany confirm
-	]]
+]]
 
 --izvrsava komandu
 function runCommand(cmd)
@@ -246,63 +239,20 @@ if result==''  then
 	end
 	
 end
-
---prije git comande, cd komanda u direktorij filea
---!! local cmd="echo "..geany.filename().." > SomeFile2.txt" : ne radi, mora biti cijeli filepath od SomeFile2.txt
---local test_cmd="echo Neki tekst u novi file >/usr/share/geany-plugins/geanylua/edit/someFile2.txt"
---local test_cmd="echo "..geany.filename().." >/usr/share/geany-plugins/geanylua/edit/someFile2.txt"
---!! local cmd="Neki tekst >/usr/share/geany-plugins/geanylua/edit/someFile2.txt": samo stvori novi file, ignorira prvi dio
-
 --[[
-function os.capture(cmd, raw)
-  local f = assert(io.popen(cmd, 'r'))
-  local s = assert(f:read('*a'))
-  f:close()
-  if raw then return s end
-  s = string.gsub(s, '^%s+', '')
-  s = string.gsub(s, '%s+$', '')
-  s = string.gsub(s, '[\n\r]+', ' ')
-  return s
-end
+	cmds:
+	
+	-- 2>&1 pokazuje ili output ili error
+	-- ako ulancavamo 2 komande, između stavljamo \n ili |
+	-- prije git comande, cd komanda u direktorij datoteke
+	
+	--"git add remote origin "
+	--"git commit -m "
+	--"git config user.name ",--"Your Name Here"
+	--"git config user.email ",--"your@email.com"
 
-function execute(command)
-	 -- returns success, error code, output.
-	 local f = io.popen(command..' 2>&1 && echo " $?"')
-	 local output = f:read"*a"
-	 local begin, finish, code = output:find" (%d+)\n$"
-	 output, code = output:sub(1, begin -1), tonumber(code)
-	 return code == 0 and true or false, code, output
-  end
-
-
-function dirLookup(dir)
-   local p = io.popen('find "'..dir..'" -type f')  --Open directory look for files, save data in p. By giving '-type f' as parameter, it returns all files.
-   for file in p:lines() do                         --Loop through all files
-       i = i + 1
-       t[i] = filename
-   end
-   return t
-end
-
-
-function getBrowserCommand()
-
-	if os.execute("firefox --version") == 0 then return "firefox"
-	elseif os.execute("google-chrome --version") == 0 then return "google-chrome"
-	else
-		return "diff"
-	end
-end
-
-
-]]
---neka izmjena
-	-- Require setting user.name and email per-repo:
-	--$ git config --global user.useConfigOnly true
 	-- Remove email address from global config:
 
 	--$ git config --global --unset-all user.email
 	--$ git config --global --unset-all user.name
-
---komentar
---komentar novi
+]]
