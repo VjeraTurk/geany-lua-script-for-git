@@ -153,7 +153,7 @@ function pushToOrigin()
 	cmd="cd "..FILE_DIR_PATH.."\ngit push -u --repo https://"..name..":"..psw.."@"..resultOdrezani.." 2>&1"
 	result = runCommand(cmd)
 	
-		if string.match(result,"Authentication failed") then
+		if string.match(result,"failed") then
 			result = pushToOrigin()
 		end
 		
